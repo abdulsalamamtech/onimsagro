@@ -6,6 +6,7 @@ enum UserRoleEnum : string
 {
     case SUPERADMIN = "super-admin";
     case ADMIN = 'admin';
+    case FARMER = 'farmer';
     case CUSTOMER = "customer";
 
 
@@ -14,6 +15,7 @@ enum UserRoleEnum : string
         return match($this) {
             UserRoleEnum::SUPERADMIN => "super-admin",
             UserRoleEnum::ADMIN => 'admin',
+            UserRoleEnum::FARMER => 'farmer',
             UserRoleEnum::CUSTOMER => "customer",
         };
     }

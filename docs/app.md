@@ -32,7 +32,7 @@
 
 
 
-type_of_farmings [
+[type_of_farmings] [
     crop farming
     livestock
     mixed farming
@@ -81,7 +81,7 @@ farmers
     ]
 
 
-crop_types
+[crop_types]
     name [
 
     ]
@@ -145,7 +145,7 @@ products
     tag [new, trending]
     status [active | inactive]
 
-    *agro product
+    sku
     stock 
     estimated_delivery [3, 5, 7 days]
     product_type_id []

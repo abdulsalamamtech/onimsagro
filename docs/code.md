@@ -14,6 +14,11 @@
     php artisan config:clear
     php artisan migrate
     php artisan make:seeder UserRoleSeeder
+
+    composer require laravel/pulse
+    php artisan vendor:publish --provider="Laravel\Pulse\PulseServiceProvider"
+    php artisan migrate
+
 ```
 
 
