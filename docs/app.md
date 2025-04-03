@@ -1,0 +1,312 @@
+
+
+# ACTORS
+    admin
+    farmers
+
+# ACTIONS
+    login [
+        email
+        password
+    ]
+
+
+
+# STATISTICS
+    total_revenue
+    total_farmers
+    orders [
+        total
+    ]
+    warehouse [
+        total
+        active
+        inactive
+    ]
+
+# ACTIVITIES
+    action
+    description
+    time
+
+
+
+
+type_of_farmings [
+    crop farming
+    livestock
+    mixed farming
+    others
+]
+
+farmers
+    full_name
+    phone_number
+    email
+    country
+    state
+    address
+
+    farm_name
+    farm_size
+    type_of_farming_id
+    main_products
+    do_you_own_farming_equipment [yes|no]
+    where_do_you_sell_your_products
+    challenge_in_selling_your_products
+    additional_comment
+
+
+# Extensions
+    [
+        technical support
+        consultations
+        training & education
+        farmer support
+    ]
+
+# Services 
+    [
+        installation
+        warehouse
+        agro equipment
+    ]
+
+
+# Communities
+    [
+        farmers
+        exporters
+        traders
+    ]
+
+
+crop_types
+    name [
+
+    ]
+
+technical_supports
+    full_name
+    phone_number
+    email
+    crop_type_id
+    stage_of_plant
+    problem_with_crop
+
+payment_accounts
+    account_name
+    account_number
+    bank_name
+
+contact_lines
+ whatsapp_name [Mr. Smith]
+ whatsapp_number [2349091922467]
+ status [active | inactive]
+
+
+
+consultations
+    full_name
+    phone_number
+    email
+    consultation_time
+    description
+
+
+***WORKING ON THIS***
+
+
+
+-----------------------------------
+
+
+
+[product_types]
+    name [
+        agro product
+        warehouse
+    ]
+
+[product_categories]
+    name [
+        seeds & plant
+        agro inputs
+        agro outputs
+        equipment & mechanization
+    ]
+
+products
+    banner
+    name
+    description
+    price
+    location
+    tag [new, trending]
+    status [active | inactive]
+
+    *agro product
+    stock 
+    estimated_delivery [3, 5, 7 days]
+    product_type_id []
+    category_id []
+
+product_images[]
+
+product_reviews
+    product_id
+    ratings [1, 3, 5]
+    comment
+
+---------------------- 
+
+warehouse_services
+    banner
+    name
+    description
+    price
+    location
+    tag [new, trending]
+    status [active | inactive]
+
+warehouse_images[]
+
+warehouse_reviews
+    product_id
+    ratings [1, 3, 5]
+    comment
+
+---------This information should be sent to whatsapp after being saved to DB-----------
+
+orders
+    full_name
+    phone_number
+    email
+    address
+    total_price
+    status [pending, confirmed, processing, shipped, delivered, cancelled]
+
+order_items
+    order_id
+    product_id
+    quantity
+    unit_price
+    total_price
+
+
+
+--------------------------------
+
+[farming_interests]
+    name [
+
+    ]
+
+training_programs
+    full_name
+    phone_number
+    email
+    farming_interest_id
+
+
+
+
+[assistance_types]
+    name [
+
+    ]
+
+farm_assistance
+    full_name
+    phone_number
+    email
+    assistance_types_id
+    reason_for_request
+
+
+
+[installation_types]
+    name [
+        greenhouse structure
+        hydroponic system setup
+        drip irrigation installation
+    ]
+
+installation_services
+    full_name
+    phone_number
+    email
+    farm_size
+    installation_type_id
+    form_location
+    notes
+
+
+
+[equipment_types]
+    name [
+        tractor
+        shovel
+    ]
+
+rental_services
+    full_name
+    phone_number
+    email
+    farm_size
+    equipment_type_id
+    location
+    notes
+    duration [7, 14 days]
+
+
+----------------------------------
+
+blogs
+    author_id
+    banner
+    title
+    content
+    views
+
+guides
+    banner
+    title
+    content
+
+partners
+    name
+    asset_id
+        assets.url
+
+quotes
+    job_title [Dr.]
+    name [Muh Bello]
+    organization [CBN]
+    content
+    asset_id
+        assets.url
+
+testimonials
+    job_title [Dr.]
+    name [Muh Bello]
+    organization [CBN]
+    content
+    asset_id
+        assets.url
+
+newsletters
+    email
+
+socials
+    facebook_url
+    x_url
+    linkedin_url
+    instagram_url
+    youtube_url
+    whatsapp_url
+
+
+fags
+    question
+    answer
