@@ -42,7 +42,7 @@ class ProductCategoryController extends Controller
             DB::beginTransaction();
 
             // set created_by
-            $data['created_by'] = ActorHelper::getUserId() ?? null;
+            $data['created_by'] = ActorHelper::getUserId();
 
             // create product category
             $productCategory = ProductCategory::create($data);
@@ -53,11 +53,11 @@ class ProductCategoryController extends Controller
             // commit transaction
             DB::commit();
             // log activity
-            info($this, [$productCategory]);
+            info('product category created', [$productCategory]);
             Activity::create([
-                'user_id' => ActorHelper::getUserId()?? null,
+                'user_id' => ActorHelper::getUserId(),
                 'description' => 'created product category',
-                'logs' => $response
+                'logs' => $productCategory
             ]);
 
             // return response
@@ -68,9 +68,12 @@ class ProductCategoryController extends Controller
             // rollback transaction
             DB::rollBack();
             // log error
-            Log::error($this, $th);
+            Log::error('Failed to create product type', [
+                'error' => $th->getMessage(),
+                'trace' => $th->getTraceAsString(),
+            ]);
             // return error response
-            return ApiResponse::error('Failed to create product category', 500);
+            return ApiResponse::error([], 'Failed to create product type '. $th->getMessage(), 500);
         }
     }
 

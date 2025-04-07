@@ -2,11 +2,23 @@
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\CloudinaryController;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentAccountController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductReviewController;
+use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
+
+
+
+
+
+
 
 
 
@@ -42,5 +54,26 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Consultation Routes
     Route::apiResource('consultations', ConsultationController::class);
 
+    // Product categories Routes
+    Route::apiResource('product-categories', ProductCategoryController::class);
+
+    // Product Types Routes
+    Route::apiResource('product-types', ProductTypeController::class);
+
+    // Product Routes
+    Route::apiResource('products', ProductController::class);
+
+    // Product reviews Routes
+    Route::apiResource('product-reviews', ProductReviewController::class);
+
+    // Order Routes
+    Route::apiResource('orders', OrderController::class);
+    
+    // Route::apiResource('order-items', OrderItemController::class);
+
 
 });
+
+
+// Cloudinary
+Route::apiResource('cloudinary', CloudinaryController::class);

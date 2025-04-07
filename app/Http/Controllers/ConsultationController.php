@@ -46,7 +46,7 @@ class ConsultationController extends Controller
             
             // commit transaction and log activity 
             DB::commit();
-            info($this, [$consultation]);
+            info('consultation created ', [$consultation]);
             Activity::create([
                 'user_id' => ActorHelper::getUserId() ?? null,
                 'description' => 'created consultation',

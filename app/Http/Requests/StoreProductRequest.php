@@ -24,7 +24,8 @@ class StoreProductRequest extends FormRequest
         return [
             'product_type_id' => 'required|exists:product_types,id',
             'product_category_id' => 'required|exists:product_categories,id',
-            'banner_id' => 'nullable|exists:assets,id',
+            // 'banner_id' => 'nullable|exists:assets,id',
+            'banner' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'sku' => 'required|string|max:255|unique:products,sku',
@@ -32,8 +33,9 @@ class StoreProductRequest extends FormRequest
             'stock' => 'required|integer|min:0',
             'tag' => 'nullable|string|max:255',
             'location' => 'nullable|string|max:255',
-            'estimated_delivery' => 'nullable|date_format:Y-m-d H:i:s',
-            'status' => 'required|in:active,inactive',
+            'estimated_delivery' => 'nullable|integer|min:1',
+            'status' => 'nullable|in:active,inactive',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 }

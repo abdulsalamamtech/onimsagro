@@ -28,6 +28,8 @@ return Application::configure(basePath: dirname(__DIR__))
         // Start of customized middleware 
         $middleware->api(prepend: [
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            // Api Exception
+            \App\Http\Middleware\ApiExceptionMiddleware::class,
         ]);
         
         // Custom middleware

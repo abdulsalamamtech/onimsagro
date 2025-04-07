@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Asset;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CloudinaryController extends Controller
 {
@@ -42,13 +43,19 @@ class CloudinaryController extends Controller
             // 'price' => ['required', 'numeric'],
             // 'description' => 'required',
         ]);
+
+
+        // return Cloudinary::uploadApi()->upload($request->file('image')->getRealPath(), [
+        //     'public_id' => 'assets/' . $request->file('image')->getClientOriginalName(),
+        //     'overwrite' => true,
+        // ]);
         
         $cloudinaryImage = $request->file('image')->storeOnCloudinary('assets');
         $url = $cloudinaryImage->getSecurePath();
         $public_id = $cloudinaryImage->getPublicId();
 
         // dd($cloudinaryImage);
-        // return [$cloudinaryImage];
+        return [$cloudinaryImage];
 
         $asset = Asset::create([
             'name' =>  $cloudinaryImage->getOriginalFileName(),

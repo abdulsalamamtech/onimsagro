@@ -40,28 +40,41 @@ class ProductTypeController extends Controller
         try {
             // start transaction
             DB::beginTransaction();
+
             // create data
-            $data['created_by'] = ActorHelper::getUserId() ?? null;
+            $data['created_by'] = ActorHelper::getUserId();
+
+            // create product type
             $productType = ProductType::create($data);
+
             // transform data
             $response = new ProductTypeResource($productType);
 
             // commit transaction and log activity 
             DB::commit();
-            info($this, [$productType]);
+            // log activity
+            info('product type created', [$productType]);
             Activity::create([
-                'user_id' => ActorHelper::getUserId() ?? null,
+                'user_id' => ActorHelper::getUserId(),
                 'description' => 'created product type',
-                'logs' => $response
+                'logs' => $productType
             ]);
 
+
+            // return response
             return ApiResponse::success($response, 'successful', 201, $productType);
+
         } catch (\Throwable $th) {
             //throw $th;
             // rollback transaction
             DB::rollBack();
-            LOG::error($this, $th);
-            return ApiResponse::error('Failed to create product type', 500);
+            // log error
+            Log::error('Failed to create product type', [
+                'error' => $th->getMessage(),
+                'trace' => $th->getTraceAsString(),
+            ]);
+            // return error response
+            return ApiResponse::error([], 'Failed to create product type '. $th->getMessage(), 500);
         }
     }
 

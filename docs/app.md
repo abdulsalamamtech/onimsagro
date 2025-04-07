@@ -114,9 +114,6 @@ consultations
     description
 
 
-***WORKING ON THIS***
-
-
 
 -----------------------------------
 
@@ -153,30 +150,20 @@ products
 
 product_images[]
 
+
+
+
 product_reviews
     product_id
     ratings [1, 3, 5]
-    comment
+    review
+    status [approve, pending, rejected]
 
----------------------- 
 
-warehouse_services
-    banner
-    name
-    description
-    price
-    location
-    tag [new, trending]
-    status [active | inactive]
-
-warehouse_images[]
-
-warehouse_reviews
-    product_id
-    ratings [1, 3, 5]
-    comment
 
 ---------This information should be sent to whatsapp after being saved to DB-----------
+
+
 
 orders
     full_name
@@ -186,6 +173,9 @@ orders
     total_price
     status [pending, confirmed, processing, shipped, delivered, cancelled]
 
+    updated_by
+    user_id
+
 order_items
     order_id
     product_id
@@ -193,6 +183,8 @@ order_items
     unit_price
     total_price
 
+
+***WORKING ON THIS***
 
 
 --------------------------------
@@ -259,6 +251,23 @@ rental_services
     notes
     duration [7, 14 days]
 
+---------------------- 
+
+warehouse_services
+    banner
+    name
+    description
+    price
+    location
+    tag [new, trending]
+    status [active | inactive]
+
+warehouse_images[]
+
+warehouse_reviews
+    product_id
+    ratings [1, 3, 5]
+    comment
 
 ----------------------------------
 

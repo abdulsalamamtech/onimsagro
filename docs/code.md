@@ -28,6 +28,14 @@ Asset
 UserProfile
 
 
+formulate the try and catch as a middleware
+// 'error' => $e->getMessage(),
+// 'trace' => $e->getTraceAsString(),
+// 'request' => request()->method(),
+// 'request_data' => request()->all(),
+// 'request_url' => request()->url(),
+// 'request_ip' => request()->ip(),
+
 
 ## Simple Terminal Commands
 ````sh
