@@ -66,7 +66,7 @@
         farmer support
     ]
 
-## Services 0
+## Services
     [
         installation
         warehouse
@@ -198,7 +198,7 @@
 
 
 ## [assistance_types]
--name []
+- name []
 
 ## farm_assistance
 - full_name
@@ -274,12 +274,12 @@
     title
     content
 
-partners
+## partners
     name
     asset_id
         assets.url
 
-quotes
+## quotes
     job_title [Dr.]
     name [Muh Bello]
     organization [CBN]
@@ -287,7 +287,7 @@ quotes
     asset_id
         assets.url
 
-testimonials
+## testimonials
     job_title [Dr.]
     name [Muh Bello]
     organization [CBN]
@@ -295,10 +295,10 @@ testimonials
     asset_id
         assets.url
 
-newsletters
+## newsletters
     email
 
-socials
+## socials
     facebook_url
     x_url
     linkedin_url
@@ -307,6 +307,6 @@ socials
     whatsapp_url
 
 
-fags
+## fags
     question
     answer
