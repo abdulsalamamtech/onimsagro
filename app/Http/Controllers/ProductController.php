@@ -136,7 +136,7 @@ class ProductController extends Controller
         // transform data
         $response = new ProductResource($product);
         // return response
-        return ApiResponse::success($response, 200);
+        return ApiResponse::success($response);
     }
 
     /**
@@ -156,8 +156,6 @@ class ProductController extends Controller
             // transform data
             $response = new ProductResource($product);
 
-            // commit transaction
-            DB::commit();
             // log activity
             info($this, [$product]);
             Activity::create([
@@ -165,6 +163,9 @@ class ProductController extends Controller
                 'description' => 'updated product',
                 'logs' => $response
             ]);
+            
+            // commit transaction
+            DB::commit();
 
             // return response
             return ApiResponse::success($response, 'Product updated successfully', 200, $product);
