@@ -118,81 +118,76 @@
 
 
 
-[product_types]
-    - name [
-        agro product
-        warehouse
-    ]
+## [product_types]
+- name [
+    agro product
+    warehouse
+]
 
-[product_categories]
-    - name [
-        seeds & plant
-        agro inputs
-        agro outputs
-        equipment & mechanization
-    ]
+## [product_categories]
+- name [
+    seeds & plant
+    agro inputs
+    agro outputs
+    equipment & mechanization
+]
 
-products
-    - banner
-    - name
-    - description
-    - price
-    - location
-    - tag [new, trending]
-    - status [active | inactive]
+## products
+- banner
+- name
+- description
+- price
+- location
+- tag [new, trending]
+- status [active | inactive]
 
-    - sku
-    - stock 
-    - estimated_delivery [3, 5, 7 days]
-    - product_type_id []
-    - category_id []
+- sku
+- stock 
+- estimated_delivery [3, 5, 7 days]
+- product_type_id []
+- category_id []
 
-product_images[]
+## product_images[]
 
-
-
-
-product_reviews
-    - product_id
-    - ratings [1, 3, 5]
-    - review
-    - status [approve, pending, rejected]
-
+## product_reviews
+- product_id
+- ratings [1, 3, 5]
+- review
+- status [approve, pending, rejected]
 
 
 ---------This information should be sent to whatsapp after being saved to DB-----------
 
 
 
-orders
-    - full_name
-    - phone_number
-    - email
-    - address
-    - total_price
-    - status [pending, confirmed, processing, shipped, delivered, cancelled]
+## orders
+- full_name
+- phone_number
+- email
+- address
+- total_price
+- status [pending, confirmed, processing, shipped, delivered, cancelled]
+- updated_by
+- user_id (if buyer can have account)
 
-    - updated_by
-    - user_id
-
-order_items
-    - order_id
-    - product_id
-    - quantity
-    - unit_price
-    - total_price
-
+## order_items
+- order_id
+- product_id
+- quantity
+- unit_price
+- total_price
 
 
 
-[farming_interests]
-    - name []
 
-training_programs
-    full_name
-    phone_number
-    email
-    farming_interest_id
+## [farming_interests]
+- name []
+
+## training_programs
+- full_name
+- phone_number
+- email
+- farming_interest_id
 
 
 
@@ -202,82 +197,79 @@ training_programs
 --------------------------------
 
 
-[assistance_types]
-    name [
+## [assistance_types]
+-name []
 
-    ]
-
-farm_assistance
-    full_name
-    phone_number
-    email
-    assistance_types_id
-    reason_for_request
+## farm_assistance
+- full_name
+- phone_number
+- email
+- assistance_types_id
+- reason_for_request
 
 
+## [installation_types]
+- name [
+    greenhouse structure
+    hydroponic system setup
+    drip irrigation installation
+]
 
-[installation_types]
-    name [
-        greenhouse structure
-        hydroponic system setup
-        drip irrigation installation
-    ]
-
-installation_services
-    full_name
-    phone_number
-    email
-    farm_size
-    installation_type_id
-    form_location
-    notes
+## installation_services
+- full_name
+- phone_number
+- email
+- farm_size
+- installation_type_id
+- form_location
+- notes
 
 
 
-[equipment_types]
-    name [
-        tractor
-        shovel
-    ]
+## [equipment_types]
+- name [
+    tractor
+    shovel
+]
 
-rental_services
-    full_name
-    phone_number
-    email
-    farm_size
-    equipment_type_id
-    location
-    notes
-    duration [7, 14 days]
+## rental_services
+- full_name
+- phone_number
+- email
+- farm_size
+- equipment_type_id
+- location
+- notes
+- duration [7, 14 days]
 
 ---------------------- 
 
-warehouse_services
-    banner
-    name
-    description
-    price
-    location
-    tag [new, trending]
-    status [active | inactive]
+## warehouse_services
+- banner
+- name
+- description
+- price
+- location
+- tag [new, trending]
+- status [active | inactive]
 
-warehouse_images[]
+## warehouse_images[]
 
-warehouse_reviews
-    product_id
-    ratings [1, 3, 5]
-    comment
+## warehouse_reviews
+- product_id
+- ratings [1, 3, 5]
+- comment
 
 ----------------------------------
 
-blogs
+## blogs
     author_id
     banner
     title
     content
     views
 
-guides
+## guides
     banner
     title
     content
