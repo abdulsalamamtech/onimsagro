@@ -1,11 +1,11 @@
 
 
 # ACTORS
-    admin
-    farmers
+    - admin
+    - farmers
 
 # ACTIONS
-    login [
+    - login [
         email
         password
     ]
@@ -13,51 +13,52 @@
 
 
 # STATISTICS
-    total_revenue
-    total_farmers
-    orders [
+    - total_revenue
+    - total_farmers
+    - orders [
         total
     ]
-    warehouse [
+    - warehouse [
         total
         active
         inactive
     ]
 
 # ACTIVITIES
-    action
-    description
-    time
+    [
+        action
+        description
+        time
+    ]
 
 
 
+## [type_of_farmings]
+    [
+        crop farming
+        livestock
+        mixed farming
+        others
+    ]
 
-[type_of_farmings] [
-    crop farming
-    livestock
-    mixed farming
-    others
-]
-
-farmers
-    full_name
-    phone_number
-    email
-    country
-    state
-    address
-
-    farm_name
-    farm_size
-    type_of_farming_id
-    main_products
-    do_you_own_farming_equipment [yes|no]
-    where_do_you_sell_your_products
-    challenge_in_selling_your_products
-    additional_comment
+## farmers
+    - full_name
+    - phone_number
+    - email
+    - country
+    - state
+    - address
+    - farm_name
+    - farm_size
+    - type_of_farming_id
+    - main_products
+    - do_you_own_farming_equipment [yes|no]
+    - where_do_you_sell_your_products
+    - challenge_in_selling_your_products
+    - additional_comment
 
 
-# Extensions
+## Extensions
     [
         technical support
         consultations
@@ -65,7 +66,7 @@ farmers
         farmer support
     ]
 
-# Services 
+## Services 0
     [
         installation
         warehouse
@@ -73,7 +74,7 @@ farmers
     ]
 
 
-# Communities
+## Communities
     [
         farmers
         exporters
@@ -81,37 +82,35 @@ farmers
     ]
 
 
-[crop_types]
-    name [
+## [crop_types]
+- name []
 
-    ]
+## technical_supports
+- full_name
+- phone_number
+- email
+- crop_type_id
+- stage_of_plant
+- problem_with_crop
 
-technical_supports
-    full_name
-    phone_number
-    email
-    crop_type_id
-    stage_of_plant
-    problem_with_crop
+## payment_accounts
+- account_name
+- account_number
+- bank_name
 
-payment_accounts
-    account_name
-    account_number
-    bank_name
-
-contact_lines
- whatsapp_name [Mr. Smith]
- whatsapp_number [2349091922467]
- status [active | inactive]
+## contact_lines
+- whatsapp_name [Mr. Smith]
+- whatsapp_number [2349091922467]
+- status [active | inactive]
 
 
 
-consultations
-    full_name
-    phone_number
-    email
-    consultation_time
-    description
+## consultations
+- full_name
+- phone_number
+- email
+- consultation_time
+- description
 
 
 
@@ -120,13 +119,13 @@ consultations
 
 
 [product_types]
-    name [
+    - name [
         agro product
         warehouse
     ]
 
 [product_categories]
-    name [
+    - name [
         seeds & plant
         agro inputs
         agro outputs
@@ -134,19 +133,19 @@ consultations
     ]
 
 products
-    banner
-    name
-    description
-    price
-    location
-    tag [new, trending]
-    status [active | inactive]
+    - banner
+    - name
+    - description
+    - price
+    - location
+    - tag [new, trending]
+    - status [active | inactive]
 
-    sku
-    stock 
-    estimated_delivery [3, 5, 7 days]
-    product_type_id []
-    category_id []
+    - sku
+    - stock 
+    - estimated_delivery [3, 5, 7 days]
+    - product_type_id []
+    - category_id []
 
 product_images[]
 
@@ -154,10 +153,10 @@ product_images[]
 
 
 product_reviews
-    product_id
-    ratings [1, 3, 5]
-    review
-    status [approve, pending, rejected]
+    - product_id
+    - ratings [1, 3, 5]
+    - review
+    - status [approve, pending, rejected]
 
 
 
@@ -166,33 +165,28 @@ product_reviews
 
 
 orders
-    full_name
-    phone_number
-    email
-    address
-    total_price
-    status [pending, confirmed, processing, shipped, delivered, cancelled]
+    - full_name
+    - phone_number
+    - email
+    - address
+    - total_price
+    - status [pending, confirmed, processing, shipped, delivered, cancelled]
 
-    updated_by
-    user_id
+    - updated_by
+    - user_id
 
 order_items
-    order_id
-    product_id
-    quantity
-    unit_price
-    total_price
+    - order_id
+    - product_id
+    - quantity
+    - unit_price
+    - total_price
 
 
-***WORKING ON THIS***
 
-
---------------------------------
 
 [farming_interests]
-    name [
-
-    ]
+    - name []
 
 training_programs
     full_name
@@ -201,6 +195,11 @@ training_programs
     farming_interest_id
 
 
+
+***WORKING ON THIS***
+
+
+--------------------------------
 
 
 [assistance_types]
