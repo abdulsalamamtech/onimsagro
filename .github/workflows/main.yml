@@ -21,7 +21,7 @@ jobs:
       - name: Deploy to Staging Server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST_IP }} << 'EOF'
-            cd ${{ secrets.TEST_APP_PATH }} # Navigate to the staging folder
+            cd ${{ secrets.APP_PATH }} # Navigate to the staging folder
 
             git pull origin main  # Pull the latest changes from main branch
             composer install  # Install dependencies
