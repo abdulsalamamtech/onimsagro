@@ -1,0 +1,37 @@
+name: Deploy to Laravel App to VPS Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH Key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to Staging Server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST_IP }} << 'EOF'
+            cd htdocs/tms.sdssn.org/tmmmsapp  # Navigate to the staging folder
+            git fetch origin # Fetch the latest version
+            git reset --hard origin/main  # Reset to the latest commit on main branch
+            git pull origin main  # Pull the latest changes from main branch
+            git clean -f # Clean the file system
+            composer install  # Install dependencies
+            # php artisan db:seed
+            php artisan migrate --force  # Migrate the database
+            php artisan cache:clear  # Clear the cache
+            php artisan view:clear  # Clear the view cache
+            php artisan route:cache  # Clear the route cache
+            npm install  # Install dependencies
+            npm run build  # Build the Node app
+          EOF
