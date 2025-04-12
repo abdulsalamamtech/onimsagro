@@ -16,12 +16,12 @@ jobs:
       - name: Set up SSH Key
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.TEST_SSH_PRIVATE_KEY }}
 
       - name: Deploy to Staging Server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST_IP }} << 'EOF'
-            cd ${{ secrets.APP_PATH }}  # Navigate to the staging folder
+          ssh -o StrictHostKeyChecking=no ${{ secrets.TEST_SSH_USER }}@${{ secrets.TEST_SSH_HOST_IP }} << 'EOF'
+            cd ${{ secrets.TEST_APP_PATH }}  # Navigate to the staging folder
             
             git fetch origin # Fetch the latest version
             git reset --hard origin/main  # Reset to the latest commit on main branch
