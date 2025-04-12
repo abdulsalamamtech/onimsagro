@@ -1,4 +1,4 @@
-name: Deploy Laravel App To Test Server
+name: Deploy Laravel App To Live Server
 
 on:
   push:

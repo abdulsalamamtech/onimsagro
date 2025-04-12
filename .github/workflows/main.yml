@@ -1,4 +1,4 @@
-name: Deploy to Laravel App to VPS Server
+name: Deploy Laravel App To Live VPS Server
 
 on:
   push:
@@ -21,12 +21,11 @@ jobs:
       - name: Deploy to Staging Server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST_IP }} << 'EOF'
-            cd htdocs/tms.sdssn.org/tmmmsapp  # Navigate to the staging folder
-            git fetch origin # Fetch the latest version
-            git reset --hard origin/main  # Reset to the latest commit on main branch
+            cd ${{ secrets.TEST_APP_PATH }} # Navigate to the staging folder
+
             git pull origin main  # Pull the latest changes from main branch
-            git clean -f # Clean the file system
             composer install  # Install dependencies
+            
             # php artisan db:seed
             php artisan migrate --force  # Migrate the database
             php artisan cache:clear  # Clear the cache
