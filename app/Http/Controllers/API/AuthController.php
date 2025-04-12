@@ -43,12 +43,21 @@ class AuthController extends Controller
         // User Login API
         public function login(Request $request)
         {
+            $request->validate([
+                'email' => ['required', 'email'],
+                'password' => ['required', 'string']
+            ]);
+
+            // incorrect email or password
             if (!Auth::attempt($request->only('email', 'password'))) {
-                return response()->json(['error' => 'Unauthorized'], 401);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Unauthorized, incorrect email or password',
+                ], 401);
             }
     
             $user = Auth::user();
-            $token = $user->createToken('MyAppToken')->plainTextToken;
+            $token = $user->createToken('auth_token')->plainTextToken;
     
             return response()->json([
                 'success' => true,
@@ -63,7 +72,8 @@ class AuthController extends Controller
         {
             return response()->json([
                 'success' => true,
-                'user' => $request->user(),
+                'message' => 'successful',
+                'data' => $request->user(),
             ]);
         }
     
