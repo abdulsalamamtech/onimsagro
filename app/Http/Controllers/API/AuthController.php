@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -21,6 +23,7 @@ class AuthController extends Controller
             ]);
     
             if ($validator->fails()) {
+                Log::error("Register validation failed");
                 return response()->json(['error' => $validator->errors()], 401);
             }   
     
@@ -29,8 +32,12 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
-    
             $token = $user->createToken('MyAppToken')->plainTextToken;
+            Activity::create([
+                'user_id' => $user->id,
+                'description' => 'created user account',
+                'logs' => $user
+            ]);
     
             return response()->json([
                 'success' => true,
@@ -50,6 +57,7 @@ class AuthController extends Controller
 
             // incorrect email or password
             if (!Auth::attempt($request->only('email', 'password'))) {
+                Log::error("Login validation failed");
                 return response()->json([
                     'success' => true,
                     'message' => 'Unauthorized, incorrect email or password',
@@ -58,7 +66,12 @@ class AuthController extends Controller
     
             $user = Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken;
-    
+            Activity::create([
+                'user_id' => $user->id,
+                'description' => 'login user account',
+                'logs' => $user
+            ]);
+
             return response()->json([
                 'success' => true,
                 'message' => 'Login successful.',
@@ -81,7 +94,11 @@ class AuthController extends Controller
         public function logout(Request $request)
         {
             $request->user()->tokens()->delete();
-    
+                Activity::create([
+                'user_id' => $request->user()->id,
+                'description' => 'logout user account',
+                'logs' => $request->user()
+            ]);
             return response()->json([
                 'success' => true,
                 'message' => 'Logout successful.',
