@@ -6,7 +6,16 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/user', function (Request $request) {
-    return $request->user();
+    // return $request->user();
+    return response()->json([
+        'success' => true,
+        'message' => 'successful',
+        'data' => [
+            'user' => $request->user(),
+            'token' => $request->bearerToken(),
+        ]
+    ], 200);
+
 })->middleware('auth:sanctum');
 
 
@@ -26,3 +35,13 @@ require __DIR__.'/apis/admin.php';
 
 // Quest routes
 require __DIR__.'/apis/quest.php';
+
+
+
+Route::get('/sku', function (Request $request) {
+
+    return response()->json([
+        'sku' => \App\Helpers\CustomGenerator::generateUniqueSKU(),
+    ]);
+});
+
