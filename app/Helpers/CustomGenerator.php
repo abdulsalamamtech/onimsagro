@@ -4,6 +4,18 @@ namespace App\Helpers;
 
 class CustomGenerator {
 
+
+
+    /**
+     * Generates a random SKU number
+     */
+    public static function generateUniqueSKU() {
+        $prefix = 'SKU-';
+        $time = time();
+        $random_int = random_int(10, 99);
+        $random_no = mt_rand(100, 999);
+        return $prefix . $time . '-'. $random_int . $random_no;
+    }
     /**
      * Generates a random atc number
      */
