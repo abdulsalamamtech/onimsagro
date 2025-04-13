@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ActorHelper;
 use App\Helpers\ApiResponse;
+use App\Helpers\CustomGenerator;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -57,7 +58,12 @@ class ProductController extends Controller
             DB::beginTransaction();
 
             // set created_by
-            $data['created_by'] = ActorHelper::getUserId() ?? 1;
+            $data['created_by'] = ActorHelper::getUserId();
+
+            // Adding sku if empty
+            if (empty($data['sku'])) {
+                $data['sku'] = CustomGenerator::generateUniqueSKU();
+            }
 
             // upload banner
             if ($request->hasFile('banner')) {
