@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Route;
 
 
 // Asset Routes
-Route::apiResource('assets', AssetController::class)
-->only(['show']);
+// Route::apiResource('assets', AssetController::class)
+// ->only(['show']);
 
 // Payment Account Routes
 Route::apiResource('payment-accounts', PaymentAccountController::class)

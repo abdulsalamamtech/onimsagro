@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->middleware('auth:sanctum')->name('admin.')->group(function () {
 
     // Role Routes
     Route::apiResource('roles', RoleController::class);
