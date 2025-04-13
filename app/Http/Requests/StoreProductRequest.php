@@ -28,7 +28,7 @@ class StoreProductRequest extends FormRequest
             'banner' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'sku' => 'required|string|max:255|unique:products,sku',
+            'sku' => 'nullable|string|max:255|unique:products,sku',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'tag' => 'nullable|string|max:255',
