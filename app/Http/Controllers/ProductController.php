@@ -101,8 +101,7 @@ class ProductController extends Controller
             // transform data
             $response = new ProductResource($product);
 
-            // commit transaction
-            // DB::commit();
+
             // log activity
             info('product created', [$product]);
             Activity::create([
@@ -110,7 +109,8 @@ class ProductController extends Controller
                 'description' => 'created product',
                 'logs' => $product
             ]);
-
+            // commit transaction
+            DB::commit();
             // return response
             return ApiResponse::success($response, 'Product created successfully', 201, $response);
            
