@@ -99,8 +99,9 @@ class ProductController extends Controller
                         'type' => $cloudinaryImage['resource_type'],
                         'size' => $cloudinaryImage['bytes'],
                     ]);
+                    info('product image', [$asset]);
                     // save product image
-                    return $product->images()->create(['asset_id' => $asset->id]);
+                    $product->images()->create(['asset_id' => $asset->id]);
                 }    
             }
 
