@@ -28,7 +28,7 @@ class ConsultationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * [public] Store a newly created resource in storage.
      */
     public function store(StoreConsultationRequest $request)
     {

@@ -72,7 +72,7 @@ class PaymentAccountController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * [public] Display the specified resource.
      */
     public function show(PaymentAccount $paymentAccount)
     {
