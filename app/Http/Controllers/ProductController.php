@@ -27,7 +27,7 @@ class ProductController extends Controller
     public function index()
     {
         // get all products
-        $products = Product::latest()->paginate(10);
+        $products = Product::with(['banner', 'productType', 'productCategory', 'images'])->latest()->paginate(10);
         // transform data
         $response = ProductResource::collection($products);
         // return response
@@ -103,6 +103,9 @@ class ProductController extends Controller
                     return $product->images()->create(['asset_id' => $asset->id]);
                 }    
             }
+
+            // Load relationships
+            $product->load(['banner', 'productType', 'productCategory', 'images']);
 
             // transform data
             $response = new ProductResource($product);
