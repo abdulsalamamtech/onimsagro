@@ -31,8 +31,18 @@ class Order extends Model
     /**
      * Get the product that owns the order.
      */ 
-    public function product()
+    // public function product()
+    // {
+    //     return $this->belongsTo(Product::class);
+    // }
+
+    /**
+     * Get the order items for the order.
+     */
+    public function orderItems()
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasMany(OrderItem::class);
     }
+
+
 }
