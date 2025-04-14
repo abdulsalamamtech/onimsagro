@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Activity;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -20,11 +21,11 @@ class OrderController extends Controller
     public function index()
     {
         // get all products
-        $orders = Order::latest()->paginate(10);
+        $orders = Order::with(['orderItems.product'])->latest()->paginate(10);
         // transform data
         $response = OrderResource::collection($orders);
         // return response
-        return ApiResponse::success($response, 200);
+        return ApiResponse::success($response);
     }
 
     /**
@@ -38,17 +39,44 @@ class OrderController extends Controller
         try {
             // begin transaction
             DB::beginTransaction();
-
+            // 'user_id' => 'required|exists:users,id',
+            // 'updated_by' => 'required|exists:users,id',
+            // 'total_price' => 'required|numeric|min:0',
+            // 'status' => 'required|string|in:pending,completed,cancelled',
+            // 'order_items.*.unit_price' => 'required|numeric|min:0',
+            // 'order_items.*.total_price' => 'required|numeric|min:0',
+            
             // set created_by
             // $data['created_by'] = ActorHelper::getUserId();
+            // 'order_id',
+            // 'product_id',
+            // 'quantity',
+            // 'unit_price',
+            // 'total_price',
 
+
+            // Calculate the entire order product
+            $data['total_price'] = 0;
+            $order_items = [];
+            foreach ($data['order_items'] as $item) {
+                $product = Product::findOrFail($item['product_id']);
+                $order_items[] = [
+                    'product_id' => $item['product_id'],
+                    'quantity' => $item['quantity'],
+                    'unit_price' => $product->price,
+                    'total_price' => $product->price * $item['quantity'],
+                ];
+                $data['total_price'] += $product->price * $item['quantity'];
+            }
+        
             // create order
             $order = Order::create($data);
+
+            // Create many order items
+            $order->orderItems()->createMany($order_items);
             // transform data
             $response = new OrderResource($order);
             
-            // commit transaction
-            // DB::commit();
             // log activity
             info('order created', [$order]);
             Activity::create([
@@ -56,7 +84,7 @@ class OrderController extends Controller
                 'description' => 'created order',
                 'logs' => $order
             ]);
-
+            
             // commit transaction
             DB::commit();
             // return response
@@ -70,7 +98,7 @@ class OrderController extends Controller
                 'trace' => $th->getTraceAsString(),
             ]);
             // return error response
-            return ApiResponse::error([], 'Order creation failed ' . $e->getMessage(), 500);
+            return ApiResponse::error([], 'Order creation failed ' . $th->getMessage(), 500);
         }
     }
 
@@ -79,6 +107,8 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        // get data relationships
+        $order->load(['orderItems.product']);
         // transform data
         $response = new OrderResource($order);
         // return response
@@ -105,8 +135,6 @@ class OrderController extends Controller
             // transform data
             $response = new OrderResource($order);
 
-            // commit transaction
-            DB::commit();
             // log activity
             info('order updated', [$order]);
             Activity::create([
@@ -114,6 +142,8 @@ class OrderController extends Controller
                 'description' => 'updated order',
                 'logs' => $order
             ]);
+            // commit transaction
+            DB::commit();
 
             // return response
             return ApiResponse::success($response, 'Order updated successfully', 200, $response);
