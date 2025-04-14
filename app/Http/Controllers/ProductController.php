@@ -27,7 +27,7 @@ class ProductController extends Controller
     public function index()
     {
         // get all products
-        $products = Product::with(['banner', 'productType', 'productCategory', 'images'])->latest()->paginate(10);
+        $products = Product::with(['banner', 'productType', 'productCategory', 'images.asset'])->latest()->paginate(10);
         // transform data
         $response = ProductResource::collection($products);
         // return response
@@ -63,6 +63,10 @@ class ProductController extends Controller
             // Adding sku if empty
             if (empty($data['sku'])) {
                 $data['sku'] = CustomGenerator::generateUniqueSKU();
+            }
+            // If status is empty
+            if (empty($data['status'])) {
+                $data['status'] = 'active';
             }
 
             // upload banner
@@ -106,7 +110,7 @@ class ProductController extends Controller
             }
 
             // Load relationships
-            $product->load(['banner', 'productType', 'productCategory', 'images']);
+            $product->load(['banner', 'productType', 'productCategory', 'images.asset']);
 
             // transform data
             $response = new ProductResource($product);
@@ -143,6 +147,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        // load relationships
+        $product->load(['banner', 'productType', 'productCategory', 'images.asset']);
         // transform data
         $response = new ProductResource($product);
         // return response
