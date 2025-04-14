@@ -22,14 +22,13 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'user_id' => 'required|exists:users,id',
-            // 'updated_by' => 'required|exists:users,id',
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone_number' => 'required|string|max:15',
             'address' => 'required|string|max:255',
-            'total_price' => 'required|numeric|min:0',
-            'status' => 'required|string|in:pending,completed,cancelled',
+            'order_items' => 'required|array',
+            'order_items.*.product_id' => 'required|exists:products,id',
+            'order_items.*.quantity' => 'required|integer|min:1',
         ];
     }
 }
