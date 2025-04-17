@@ -16,6 +16,10 @@ class Activity extends Model
         'logs'
     ];
 
+    protected $casts = [
+        'logs' => 'array',
+    ];
+
 
     public function user()
     {
