@@ -208,4 +208,19 @@ class ProductController extends Controller
         // return response
         return ApiResponse::success([], 'Product deleted successfully', 204);
     }
+
+    /**
+     * [public] Display all active products.
+     */
+    public function getProducts()
+    {
+        // get all products
+        $products = Product::where('status', 'active')
+            ->with(['banner', 'productType', 'productCategory', 'images.asset'])
+            ->latest()->paginate(10);
+        // transform data
+        $response = ProductResource::collection($products);
+        // return response
+        return ApiResponse::success($response, 200);
+    }
 }
