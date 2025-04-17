@@ -23,7 +23,6 @@ Route::apiResource('payment-accounts', PaymentAccountController::class)
 Route::apiResource('consultations', ConsultationController::class)
 ->only(['store']);
 
-
 // Order Routes
 Route::apiResource('orders', OrderController::class)
 ->only(['store']);
