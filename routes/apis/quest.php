@@ -26,7 +26,7 @@ Route::apiResource('consultations', ConsultationController::class)
 ->only(['store']);
 
 // Product Routes
-Route::get('products', ProductController::class, 'getProducts');
+Route::get('products', [ProductController::class, 'getProducts']);
 
 // Order Routes
 Route::apiResource('orders', OrderController::class)
