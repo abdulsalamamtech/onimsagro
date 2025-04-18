@@ -3,12 +3,16 @@
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\FarmingInterestController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentAccountController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -32,5 +36,12 @@ Route::get('products/{product}', [ProductController::class, 'show']);
 
 // Order Routes
 Route::apiResource('orders', OrderController::class)
-->only(['store']);
+    ->only(['store']);
 
+// Farming interest
+Route::apiResource('farming-interests', FarmingInterestController::class)
+    ->only(['index']);
+
+// Training program
+Route::apiResource('training-programs', TrainingProgramController::class)
+    ->only(['store']);
