@@ -28,7 +28,7 @@ class TrainingProgramController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * [public] Store a newly created resource in storage.
      */
     public function store(StoreTrainingProgramRequest $request)
     {
