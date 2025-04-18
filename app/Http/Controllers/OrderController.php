@@ -80,7 +80,7 @@ class OrderController extends Controller
             // log activity
             info('order created', [$order]);
             Activity::create([
-                'user_id' => ActorHelper::getUserId()?? null,
+                'user_id' => ActorHelper::getUserId(),
                 'description' => 'created order',
                 'logs' => $order
             ]);
