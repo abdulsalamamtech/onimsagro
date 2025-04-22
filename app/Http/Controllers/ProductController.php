@@ -28,6 +28,10 @@ class ProductController extends Controller
     {
         // get all products
         $products = Product::with(['banner', 'productType', 'productCategory', 'images.asset'])->latest()->paginate(10);
+        // check if data is empty
+        if ($products->isEmpty()) {
+            return ApiResponse::error([], "No products found", 404);
+        }
         // transform data
         $response = ProductResource::collection($products);
         // return response
@@ -206,7 +210,7 @@ class ProductController extends Controller
         $product->delete();
 
         // return response
-        return ApiResponse::success([], 'Product deleted successfully', 204);
+        return ApiResponse::success([], 'Product deleted successfully', 200);
     }
 
     /**
@@ -222,5 +226,39 @@ class ProductController extends Controller
         $response = ProductResource::collection($products);
         // return response
         return ApiResponse::success($response, 200);
+    }
+
+
+     /**
+      * Get trashed data
+      */
+      public function trashed(){
+        // Get data
+        $products = Product::onlyTrashed()->paginate();
+        // check if data is empty
+        if ($products->count() < 1) {
+            return ApiResponse::error([], "No trashed data found", 404);
+        }
+        // transform data [add pagination to data]
+        $response = ProductResource::collection($products);
+        // return response
+        return ApiResponse::success($response, "successfully load trashed data", 200);
+      }
+
+
+    /**
+     * Restore deleted data
+     */
+    public function restore($id){
+        // Get data
+        $product = Product::onlyTrashed()->find($id);
+        // check if data is empty
+        if (!$product) {
+            return ApiResponse::error([], "No trashed data found", 404);
+        }
+        // transform data
+        $product->restore();
+        // return response
+        return ApiResponse::success($product, "successfully restored trashed data", 200);
     }
 }

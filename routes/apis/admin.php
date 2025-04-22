@@ -17,20 +17,6 @@ use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Route::prefix('admin')->middleware('auth:sanctum')->name('admin.')->group(function () {
 
     // Role Routes
@@ -62,8 +48,14 @@ Route::prefix('admin')->middleware('auth:sanctum')->name('admin.')->group(functi
     // Product Types Routes
     Route::apiResource('product-types', ProductTypeController::class);
 
+
     // Product Routes
     Route::apiResource('products', ProductController::class);
+    // Trashed product
+    Route::get('product-trashed', [ProductController::class, 'trashed'])->name('products.trashed');
+    // Restore product
+    Route::patch('products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
+
 
     // Product reviews Routes
     Route::apiResource('product-reviews', ProductReviewController::class);
