@@ -120,4 +120,17 @@ class ProductReviewController extends Controller
         return ApiResponse::success([], 'Product review deleted successfully', 200);
 
     }
+
+    /**
+     * [public] Display a listing of the resource.
+     */
+    public function getReviews()
+    {
+        // get all product reviews
+        $product_reviews = ProductReview::where('status', 'approved')->with('user', 'product')->latest()->paginate();
+        // transform data
+        $response = ProductReviewResource::collection($product_reviews);
+        // return response
+        return ApiResponse::success($response, 200);
+    }    
 }

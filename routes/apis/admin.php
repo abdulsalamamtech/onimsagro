@@ -62,8 +62,7 @@ Route::prefix('admin')->middleware('auth:sanctum')->name('admin.')->group(functi
 
     // Order Routes
     Route::apiResource('orders', OrderController::class);
-    
-    // Route::apiResource('order-items', OrderItemController::class);
+
 
     // Farming interest
     Route::apiResource('farming-interests', FarmingInterestController::class);

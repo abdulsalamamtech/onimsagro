@@ -20,6 +20,9 @@ class ConsultationController extends Controller
     public function index()
     {
         $consultations = Consultation::latest()->paginate(10);
+        if($consultations->isEmpty()){
+            return ApiResponse::error([], 'not found', 404);
+        }
         // transform data
         $response = ConsultationResource::collection($consultations);
 

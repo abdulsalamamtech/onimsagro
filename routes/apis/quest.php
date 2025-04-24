@@ -7,10 +7,12 @@ use App\Http\Controllers\FarmingInterestController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentAccountController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductReviewController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -33,6 +35,8 @@ Route::apiResource('consultations', ConsultationController::class)
 Route::get('products', [ProductController::class, 'getProducts']);
 Route::get('products/{product}', [ProductController::class, 'show']);
 
+// Product Reviews
+Route::get('product-reviews', [ProductReviewController::class, 'getReviews']);
 
 // Order Routes
 Route::apiResource('orders', OrderController::class)

@@ -25,6 +25,10 @@ class PaymentAccountController extends Controller
         // get all payment accounts
         $paymentAccounts = PaymentAccount::latest()->paginate(10);
 
+        if($paymentAccounts->isEmpty()){
+            return ApiResponse::error([], 'not found', 404);
+        }
+
         // transform data
         $response = PaymentAccountResource::collection($paymentAccounts);
 
