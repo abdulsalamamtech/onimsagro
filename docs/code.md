@@ -42,5 +42,5 @@ formulate the try and catch as a middleware
 
     php artisan make:model Department -mcrR --api
     php artisan make:resource DepartmentResource
-
+    php artisan make:model WarehouseImage -m
 ```

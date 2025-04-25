@@ -100,7 +100,7 @@
 
 ## contact_lines
 - whatsapp_name [Mr. Smith]
-- whatsapp_number [2349091922467]
+- whatsapp_number [2349091922467](13)
 - status [active | inactive]
 
 
@@ -191,7 +191,42 @@
 
 
 
+
+## warehouses
+- banner
+- name
+- sku
+- description
+- price
+- location
+- tag [new, trending]
+- status [active | inactive]
+- capacity [string]
+
+## warehouse_images[]
+
+
+
 ***WORKING ON THIS***
+
+---------------------- 
+
+## warehouse_reviews
+- warehouse_id
+- ratings [1, 3, 5]
+- comment
+
+
+## warehouse_orders
+- warehouse_id
+- full_name
+- phone_number
+- email
+- address
+- total_price
+- status [pending, confirmed, processing, shipped, delivered, cancelled]
+- updated_by
+- user_id (if buyer can have account)
 
 
 --------------------------------
@@ -242,23 +277,7 @@
 - notes
 - duration [7, 14 days]
 
----------------------- 
 
-## warehouse_services
-- banner
-- name
-- description
-- price
-- location
-- tag [new, trending]
-- status [active | inactive]
-
-## warehouse_images[]
-
-## warehouse_reviews
-- product_id
-- ratings [1, 3, 5]
-- comment
 
 ----------------------------------
 

@@ -14,7 +14,10 @@ use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\WarehouseReviewController;
 use Illuminate\Support\Facades\Route;
+
 
 
 Route::prefix('admin')->middleware('auth:sanctum')->name('admin.')->group(function () {
@@ -69,6 +72,12 @@ Route::prefix('admin')->middleware('auth:sanctum')->name('admin.')->group(functi
 
     // Training program
     Route::apiResource('training-programs', TrainingProgramController::class);
+
+    // Warehouse Routes
+    Route::apiResource('warehouses', WarehouseController::class);
+
+    // Warehouse Reviews Routes
+    Route::apiResource('warehouse-reviews', WarehouseReviewController::class);
 
 
 });
