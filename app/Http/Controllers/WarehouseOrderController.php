@@ -21,7 +21,7 @@ class WarehouseOrderController extends Controller
     public function index()
     {
         // get all data
-        $warehouseOrders = WarehouseOrder::with(['banner', 'images.asset'])->latest()->paginate(10);
+        $warehouseOrders = WarehouseOrder::with(['warehouse'])->latest()->paginate(10);
         // check if data is empty
         if ($warehouseOrders->isEmpty()) {
             return ApiResponse::error([], "No warehouses found", 404);
