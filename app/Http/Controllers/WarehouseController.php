@@ -133,7 +133,7 @@ class WarehouseController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * [public] Display the specified resource.
      */
     public function show(Warehouse $warehouse)
     {
@@ -181,7 +181,7 @@ class WarehouseController extends Controller
             // rollback transaction
             DB::rollBack();
             // log error
-            Log::error('Failed to update warehouse', $th);
+            Log::error('Failed to update warehouse', $th->getMessage());
             // return error response
             return ApiResponse::error('Failed to update warehouse', 500);
         }        
@@ -226,9 +226,9 @@ class WarehouseController extends Controller
 
 
     /**
-     * [public] Display all active products.
+     * [public] Display all active warehouses.
      */
-    public function getWarehouse()
+    public function getWarehouses()
     {
         // get all products
         $warehouses = Warehouse::where('status', 'active')
