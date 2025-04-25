@@ -133,6 +133,6 @@ class ProductTypeController extends Controller
         $productType->delete();
 
         // return response
-        return ApiResponse::success([], 'Product type deleted successfully', 204);
+        return ApiResponse::success([], 'Product type deleted successfully', 200);
     }
 }

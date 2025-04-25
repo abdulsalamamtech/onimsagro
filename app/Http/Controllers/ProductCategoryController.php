@@ -139,6 +139,6 @@ class ProductCategoryController extends Controller
         $productCategory->delete();
 
         // return response
-        return ApiResponse::success([], 'Product category deleted successfully', 204);
+        return ApiResponse::success([], 'Product category deleted successfully', 200);
     }
 }
