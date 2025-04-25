@@ -207,14 +207,11 @@
 
 
 
-***WORKING ON THIS***
-
----------------------- 
-
 ## warehouse_reviews
 - warehouse_id
 - ratings [1, 3, 5]
 - comment
+
 
 
 ## warehouse_orders
@@ -231,6 +228,12 @@
 
 --------------------------------
 
+
+
+
+***WORKING ON THIS***
+
+---------------------- 
 
 ## [assistance_types]
 - name []

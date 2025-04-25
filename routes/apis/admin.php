@@ -15,6 +15,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\WarehouseOrderController;
 use App\Http\Controllers\WarehouseReviewController;
 use Illuminate\Support\Facades\Route;
 
@@ -66,7 +67,6 @@ Route::prefix('admin')->middleware('auth:sanctum')->name('admin.')->group(functi
     // Order Routes
     Route::apiResource('orders', OrderController::class);
 
-
     // Farming interest
     Route::apiResource('farming-interests', FarmingInterestController::class);
 
@@ -75,11 +75,16 @@ Route::prefix('admin')->middleware('auth:sanctum')->name('admin.')->group(functi
 
     // Warehouse Routes
     Route::apiResource('warehouses', WarehouseController::class);
+    // Trashed product
+    Route::get('warehouse-trashed', [WarehouseController::class, 'trashed'])->name('warehouses.trashed');
+    // Restore product
+    Route::patch('warehouses/{id}/restore', [WarehouseController::class, 'restore'])->name('warehouses.restore');
 
     // Warehouse Reviews Routes
     Route::apiResource('warehouse-reviews', WarehouseReviewController::class);
 
-
+    // Warehouse Order Routes
+    Route::apiResource('warehouse-orders', WarehouseOrderController::class);
 });
 
 

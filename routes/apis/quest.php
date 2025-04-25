@@ -11,7 +11,12 @@ use App\Http\Controllers\ProductReviewController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\WarehouseOrderController;
+use App\Http\Controllers\WarehouseReviewController;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -31,6 +36,7 @@ Route::apiResource('payment-accounts', PaymentAccountController::class)
 Route::apiResource('consultations', ConsultationController::class)
 ->only(['store']);
 
+
 // Product Routes
 Route::get('products', [ProductController::class, 'getProducts']);
 Route::get('products/{product}', [ProductController::class, 'show']);
@@ -42,10 +48,23 @@ Route::get('product-reviews', [ProductReviewController::class, 'getReviews']);
 Route::apiResource('orders', OrderController::class)
     ->only(['store']);
 
+
 // Farming interest
 Route::apiResource('farming-interests', FarmingInterestController::class)
     ->only(['index']);
 
 // Training program
 Route::apiResource('training-programs', TrainingProgramController::class)
+    ->only(['store']);
+
+
+// Warehouse Routes
+Route::get('warehouses', [WarehouseController::class, 'getWarehouses']);
+Route::get('warehouses/{warehouse}', [WarehouseController::class, 'show']);
+
+// Warehouse Reviews
+Route::get('product-reviews', [WarehouseReviewController::class, 'getReviews']);
+
+// Warehouse Order Routes
+Route::apiResource('warehouse-orders', WarehouseOrderController::class)
     ->only(['store']);
