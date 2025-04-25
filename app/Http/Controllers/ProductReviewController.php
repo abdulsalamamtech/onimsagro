@@ -43,12 +43,12 @@ class ProductReviewController extends Controller
 
             // create product review
             $product_review = ProductReview::create($data);
+            
+            // transform data
+            $response = new ProductReviewResource($product_review);
 
             // commit transaction
             DB::commit();
-
-            // transform data
-            $response = new ProductReviewResource($product_review);
 
             return ApiResponse::success($response, 201);
         } catch (\Exception $e) {
@@ -71,7 +71,7 @@ class ProductReviewController extends Controller
         // transform data
         $response = new ProductReviewResource($productReview);
         // return response
-        return ApiResponse::success($response, 200);
+        return ApiResponse::success($response, 'successful', 200);
     }
 
     /**
@@ -95,7 +95,7 @@ class ProductReviewController extends Controller
             // transform data
             $response = new ProductReviewResource($productReview);
 
-            return ApiResponse::success($response, 200);
+            return ApiResponse::success($response, 'Product review updated successfully', 200);
         } catch (\Exception $e) {
             // rollback transaction
             DB::rollBack();
