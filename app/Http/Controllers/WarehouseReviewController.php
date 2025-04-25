@@ -7,6 +7,7 @@ use App\Helpers\ApiResponse;
 use App\Http\Requests\StoreWarehouseReviewRequest;
 use App\Http\Requests\UpdateWarehouseReviewRequest;
 use App\Http\Resources\WarehouseResource;
+use App\Http\Resources\WarehouseReviewResource;
 use App\Models\WarehouseReview;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -142,4 +143,18 @@ class WarehouseReviewController extends Controller
             return ApiResponse::error([], 'failed to delete warehouse review ' . $e->getMessage(), 500);
         }
     }
+
+
+    /**
+     * [public] Display a listing of the resource.
+     */
+    public function getReviews()
+    {
+        // get all warehouse reviews
+        $warehouse_reviews = WarehouseReview::where('status', 'approved')->with('user', 'warehouse')->latest()->paginate();
+        // transform data
+        $response = WarehouseReviewResource::collection($warehouse_reviews);
+        // return response
+        return ApiResponse::success($response, 200);
+    }        
 }
