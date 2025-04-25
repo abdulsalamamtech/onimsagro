@@ -27,7 +27,7 @@ class UpdateProductRequest extends FormRequest
             'banner_id' => 'nullable|exists:assets,id',
             'name' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-           'sku' => 'nullable|string|max:255|unique:products,sku,' . $this->route('product'),
+            'sku' => 'nullable|string|max:255|unique:products,sku,' . $this->route('product'),   
             'price' => 'nullable|numeric|min:0',
             'stock' => 'nullable|integer|min:0',
             'tag' => 'nullable|string|max:255',
