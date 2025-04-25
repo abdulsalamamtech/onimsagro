@@ -17,6 +17,8 @@ class ActorHelper {
         // Implement logic to fetch user ID from authenticated actor
         // Return the user ID as a string
         return request()?->user()?->id ?? 1;
+        // return request()?->user()?->id;
+
     }
 
 
