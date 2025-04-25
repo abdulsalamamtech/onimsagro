@@ -29,8 +29,6 @@ class ProductReview extends Model
      * @var array
      */
     protected $casts = [
-        'user_id' => 'integer',
-        'product_id' => 'integer',
         'rating' => 'integer',
         'status' => 'string',
     ];
