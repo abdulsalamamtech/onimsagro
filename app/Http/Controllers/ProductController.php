@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // get all products
+        // get all data
         $products = Product::with(['banner', 'productType', 'productCategory', 'images.asset'])->latest()->paginate(10);
         // check if data is empty
         if ($products->isEmpty()) {
@@ -35,7 +35,7 @@ class ProductController extends Controller
         // transform data
         $response = ProductResource::collection($products);
         // return response
-        return ApiResponse::success($response, 200);
+        return ApiResponse::success($response, 'successful', 200);
     }
 
     /**
@@ -90,7 +90,7 @@ class ProductController extends Controller
                 $data['banner_id'] = $asset->id;
             }
             
-            // create product category
+            // create product
             $product = Product::create($data);
 
             // Upload images
@@ -98,7 +98,7 @@ class ProductController extends Controller
                 foreach($request->file('images') as $file){
                     // upload file to cloudinary
                     $cloudinaryImage = Cloudinary::uploadApi()->upload($file->getRealPath());
-                    // save product image to assets
+                    // save image to assets
                     $asset = Asset::create([
                         'name' =>  $data['name'],
                         'description' => 'product upload',
@@ -108,7 +108,7 @@ class ProductController extends Controller
                         'size' => $cloudinaryImage['bytes'],
                     ]);
                     info('product image', [$asset]);
-                    // save product image
+                    // save images
                     $product->images()->create(['asset_id' => $asset->id]);
                 }    
             }
@@ -177,7 +177,7 @@ class ProductController extends Controller
             $response = new ProductResource($product);
 
             // log activity
-            info($this, [$product]);
+            info('product updated', [$product]);
             Activity::create([
                 'user_id' => ActorHelper::getUserId()?? null,
                 'description' => 'updated product',
