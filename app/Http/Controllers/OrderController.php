@@ -122,7 +122,12 @@ class OrderController extends Controller
     {
         // validated data
         $data = $request->validated();
-
+        // remove empty values and get unique values
+        // $data = array_unique($data);
+        $data = array_filter($data, function ($value) {
+            return !is_null($value) && $value !== '';
+        });
+        // return $data;
         try {
             // begin transaction
             DB::beginTransaction();
@@ -173,5 +178,42 @@ class OrderController extends Controller
 
     }
 
+    /**
+     * Confirm order.
+     */
+    public function confirmOrder(Order $order)
+    {
+        // load relationships
+        $order->status = 'confirmed';
+        $order->save();
+        // transform data
+        $response = new OrderResource($order);
+        // return response
+        return ApiResponse::success($response, 'Order confirmed successfully', 200);
+    }  
 
+    /**
+     * Cancel order.
+     */
+    public function cancelOrder(Order $order)
+    {
+        // load relationships
+        $order->status = 'cancelled';
+        $order->save();
+        // transform data
+        $response = new OrderResource($order);
+        // return response
+        return ApiResponse::success($response, 'Order cancelled successfully', 200);
+    } 
+
+    /**
+     * Get order status.
+     */
+    public function getOrderStatus()
+    {
+        // get order status
+        $response = ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'];
+        // return response
+        return ApiResponse::success($response, 'successful', 200);
+    }
 }

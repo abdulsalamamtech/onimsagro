@@ -98,11 +98,17 @@ class WarehouseOrderController extends Controller
     public function update(UpdateWarehouseOrderRequest $request, WarehouseOrder $warehouseOrder)
     {
         $data = $request->validated();
-        $data['updated_by'] = ActorHelper::getUserId();
-
+        // remove empty values and get unique values
+        // $data = array_unique($data);
+        $data = array_filter($data, function ($value) {
+            return !is_null($value) && $value !== '';
+        });        
+        
         try {
             // begin transaction
             DB::beginTransaction();
+            
+            $data['updated_by'] = ActorHelper::getUserId();
 
             // update product
             $warehouseOrder->update($data);
@@ -146,4 +152,43 @@ class WarehouseOrderController extends Controller
         // return response
         return ApiResponse::success([], 'Warehouse order deleted successfully', 200);        
     }
+
+    /**
+     * Confirm order.
+     */
+    public function confirmOrder(WarehouseOrder $warehouseOrder)
+    {
+        // load relationships
+        $warehouseOrder->status = 'confirmed';
+        $warehouseOrder->save();
+        // transform data
+        $response = new WarehouseOrderResource($warehouseOrder);
+        // return response
+        return ApiResponse::success($response, 'Warehouse order confirmed successfully', 200);
+    }  
+
+    /**
+     * Cancel order.
+     */
+    public function cancelOrder(WarehouseOrder $warehouseOrder)
+    {
+        // load relationships
+        $warehouseOrder->status = 'cancelled';
+        $warehouseOrder->save();
+        // transform data
+        $response = new WarehouseOrderResource($warehouseOrder);
+        // return response
+        return ApiResponse::success($response, 'Warehouse order cancelled successfully', 200);
+    } 
+
+    /**
+     * Get order status.
+     */
+    public function getOrderStatus()
+    {
+        // get order status
+        $response = ['pending', 'confirmed', 'processing', 'cancelled'];
+        // return response
+        return ApiResponse::success($response, 'successful', 200);
+    }    
 }

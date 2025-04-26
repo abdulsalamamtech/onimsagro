@@ -66,6 +66,9 @@ Route::prefix('admin')->middleware('auth:sanctum')->name('admin.')->group(functi
 
     // Order Routes
     Route::apiResource('orders', OrderController::class);
+    Route::patch('orders/{order}/confirm', [OrderController::class, 'confirmOrder'])->name('orders.confirm');
+    Route::patch('orders/{order}/cancel', [OrderController::class, 'cancelOrder'])->name('orders.cancel');
+    Route::get('order-status', [OrderController::class, 'getOrderStatus'])->name('orders.status');
 
     // Farming interest
     Route::apiResource('farming-interests', FarmingInterestController::class);
@@ -85,6 +88,10 @@ Route::prefix('admin')->middleware('auth:sanctum')->name('admin.')->group(functi
 
     // Warehouse Order Routes
     Route::apiResource('warehouse-orders', WarehouseOrderController::class);
+    Route::patch('warehouse-orders/{warehouseOrder}/confirm', [WarehouseOrderController::class, 'confirmOrder'])->name('orders.confirm');
+    Route::patch('warehouse-orders/{warehouseOrder}/cancel', [WarehouseOrderController::class, 'cancelOrder'])->name('orders.cancel');
+    Route::get('warehouse-order-status', [WarehouseOrderController::class, 'getOrderStatus'])->name('orders.status');
+
 });
 
 

@@ -22,11 +22,11 @@ class UpdateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'full_name' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|email|max:255',
-            'phone_number' => 'sometimes|required|string|max:15',
-            'address' => 'required|string|max:255',
-            'status' => 'required|string|in:pending,completed,cancelled',
+            'full_name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'phone_number' => 'nullable|string|max:13',
+            'address' => 'nullable|string|max:255',
+            'status' => 'required|string|in:pending,confirmed,processing,shipped,delivered,cancelled',
         ];
     }
 }

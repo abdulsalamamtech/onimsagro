@@ -22,12 +22,12 @@ class UpdateWarehouseOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'warehouse_id' => 'required|exists:warehouses,id',
-            'full_name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone_number' => 'required|string|max:15',
-            'address' => 'required|string|max:255',
-            'status' => 'required|string|in:pending,completed,cancelled',
+            'warehouse_id' => 'nullable|exists:warehouses,id',
+            'full_name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'phone_number' => 'nullable|string|max:15',
+            'address' => 'nullable|string|max:255',
+            'status' => 'nullable|string|in:pending,confirmed,cancelled',
         ];
     }
 }
