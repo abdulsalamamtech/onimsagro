@@ -22,7 +22,7 @@ class StoreFarmingInterestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:farming_interests,name,except,farming_interest',
         ];
     }
 }

@@ -20,7 +20,7 @@ class FarmingInterestController extends Controller
     public function index()
     {
         // get all product reviews
-        $farming_interests = FarmingInterest::with('created_by')->latest()->paginate();
+        $farming_interests = FarmingInterest::with('createdBy')->latest()->paginate();
         // transform data
         $response = FarmingInterestResource::collection($farming_interests);
         // return response
@@ -98,17 +98,17 @@ class FarmingInterestController extends Controller
             DB::beginTransaction();
 
             // Update to database
-            $farming_interest = $farmingInterest->update($data);
+            $farmingInterest->update($data);
 
             // transform data
-            $response = new FarmingInterestResource($farming_interest);
+            $response = new FarmingInterestResource($farmingInterest);
 
             // log activity
-            info('farming interest updated', [$farming_interest]);
+            info('farming interest updated', [$farmingInterest]);
             Activity::create([
                 'user_id' => ActorHelper::getUserId(),
                 'description' => 'updated farming interest',
-                'logs' => $farming_interest
+                'logs' => $farmingInterest
             ]);
 
             // commit transaction
