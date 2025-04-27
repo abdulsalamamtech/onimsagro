@@ -25,7 +25,7 @@ class UpdateConsultationRequest extends FormRequest
             'full_name' => 'sometimes|string|max:255',
             'phone_number' => 'sometimes|string|max:15',
             'email' => 'sometimes|email|max:255',
-            'consultation_time' => 'sometimes|date_format:Y-m-d H:i',
+            'consultation_time' => 'required|date|after:now',
             'description' => 'sometimes|string|max:255',
             'status' => 'sometimes|in:pending,confirmed,completed,canceled',
         ];
