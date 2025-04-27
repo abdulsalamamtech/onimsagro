@@ -25,7 +25,8 @@ class StoreConsultationRequest extends FormRequest
             'full_name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:15',
             'email' => 'required|email|max:255',
-            'consultation_time' => 'required|date_format:Y-m-d H:i',
+            // 'consultation_time' => 'required|date_format:Y-m-d H:i',
+            'consultation_time' => 'required|date|after:now',
             'description' => 'required|string|max:255',
             // 'status' => 'required|in:pending,confirmed,completed,canceled',
         ];
