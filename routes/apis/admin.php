@@ -88,9 +88,9 @@ Route::prefix('admin')->middleware('auth:sanctum')->name('admin.')->group(functi
 
     // Warehouse Order Routes
     Route::apiResource('warehouse-orders', WarehouseOrderController::class);
-    Route::patch('warehouse-orders/{warehouseOrder}/confirm', [WarehouseOrderController::class, 'confirmOrder'])->name('orders.confirm');
-    Route::patch('warehouse-orders/{warehouseOrder}/cancel', [WarehouseOrderController::class, 'cancelOrder'])->name('orders.cancel');
-    Route::get('warehouse-order-status', [WarehouseOrderController::class, 'getOrderStatus'])->name('orders.status');
+    Route::patch('warehouse-orders/{warehouseOrder}/confirm', [WarehouseOrderController::class, 'confirmOrder'])->name('warehouse-orders.confirm');
+    Route::patch('warehouse-orders/{warehouseOrder}/cancel', [WarehouseOrderController::class, 'cancelOrder'])->name('warehouse-orders.cancel');
+    Route::get('warehouse-order-status', [WarehouseOrderController::class, 'getOrderStatus'])->name('warehouse-orders.status');
 
 });
 
