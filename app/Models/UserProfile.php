@@ -7,7 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class UserProfile extends Model
 {
     protected $fillable = [
-        'user_id', 'asset_id', 'first_name','middle_name', 'last_name', 'address', 'city','state', 'zip_code', 'country'
+        'user_id', 
+        'asset_id', 
+        'first_name',
+        'middle_name', 
+        'last_name', 
+        'address', 
+        'city',
+        'state', 
+        'zip_code', 
+        'country'
     ];
 
     public function user(){
@@ -22,9 +31,5 @@ class UserProfile extends Model
         return $this->first_name . ' ' . $this->middle_name . ' ' . $this->last_name;
     }
 
-    public function getAddressAttribute(){
-        return $this->address . ', ' . $this->city . ', ' . $this->state . ', ' . $this->zip_code . ', ' . $this->country;
-    }
 
-    
 }
