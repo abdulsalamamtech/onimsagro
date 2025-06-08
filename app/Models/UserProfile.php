@@ -23,8 +23,8 @@ class UserProfile extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function asset(){
-        return $this->belongsTo(Asset::class);
+    public function profileImage(){
+        return $this->belongsTo(Asset::class, 'asset_id');
     }
 
     public function getFullNameAttribute(){

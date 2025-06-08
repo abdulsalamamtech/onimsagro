@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->foreignId('warehouse_order_id')->nullable()->constrained('warehouse_orders')->onDelete('cascade');
             $table->foreignId('order_id')->nullable()->constrained('orders')->onDelete('cascade');
-            // payment_type [warehouse, product, consultation, donation, new]
-            $table->string('payment_type')->default('product');
+            // payment_type [warehouse_order, order, consultation, donation, new]
+            $table->string('payment_type')->default('order');
             $table->string('full_name')->nullable();
             $table->string('email')->nullable();
             $table->decimal('amount', 10, 2);

@@ -112,6 +112,7 @@ class TransactionController extends Controller
         
         try {
             // Verify payment transaction
+            $redirectUrl = config('app.frontend_url') . '/payment/error';
             if ($request?->filled('trxref') || $request?->filled('reference')) {
                 $reference = $request?->reference ?? $request?->trxref;
                 $PSP = Paystack::verify($reference);
@@ -139,13 +140,13 @@ class TransactionController extends Controller
                         // redirect to success page
                         $redirectUrl = config('app.frontend_url') . '/payment/success?trxref=' . $transaction->reference;
                         // payment type
-                        if($transaction->payment_type == 'product') {
+                        if($transaction->payment_type == 'warehouse_order' && $transaction->warehouse_order_id) {
                             // update warehouse order
                             $warehouseOrder = WarehouseOrder::where('id', $transaction->warehouse_order_id)->first();
                             $warehouseOrder->status = 'confirmed';
                             $warehouseOrder->save();
                         }
-                        if($transaction->payment_type == 'order') {
+                        if($transaction->payment_type == 'order' && $transaction->order_id) {
                             // update service order
                             $order = Order::where('id', $transaction->order_id)->first();
                             $order->status = 'confirmed';

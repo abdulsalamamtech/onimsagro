@@ -44,10 +44,10 @@ Route::prefix('admin')
     Route::apiResource('user-profiles', UserProfileController::class)
         ->except(['update']);
     // User Profile Update
-    Route::patch('user-profiles/{user}', [UserProfileController::class, 'update'])
+    Route::post('user-profiles/{user}/update', [UserProfileController::class, 'updateUserProfile'])
         ->name('user-profiles.update');
     // User Profile Update Authenticated User
-    Route::patch('user-profile', [UserProfileController::class, 'updateProfile'])
+    Route::post('update-user-profile', [UserProfileController::class, 'updateProfile'])
         ->name('user-profile.update');
 
     // Payment Account Routes
