@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ActorHelper;
 use App\Helpers\ApiResponse;
+use App\Helpers\Paystack;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
@@ -45,7 +46,7 @@ class OrderController extends Controller
             // 'status' => 'required|string|in:pending,completed,cancelled',
             // 'order_items.*.unit_price' => 'required|numeric|min:0',
             // 'order_items.*.total_price' => 'required|numeric|min:0',
-            
+
             // set created_by
             // $data['created_by'] = ActorHelper::getUserId();
             // 'order_id',
@@ -68,27 +69,81 @@ class OrderController extends Controller
                 ];
                 $data['total_price'] += $product->price * $item['quantity'];
             }
-        
+
             // create order
             $order = Order::create($data);
 
             // Create many order items
             $order->orderItems()->createMany($order_items);
-            // transform data
-            $response = new OrderResource($order);
-            
-            // log activity
-            info('order created', [$order]);
-            Activity::create([
-                'user_id' => ActorHelper::getUserId(),
-                'description' => 'created order',
-                'logs' => $order
-            ]);
-            
-            // commit transaction
-            DB::commit();
-            // return response
-            return ApiResponse::success($response, 'order created successfully', 201, $response);
+
+            // Get total payment amount
+            $totalPayAmount = $order?->total_price;
+            if (!$totalPayAmount) {
+                return ApiResponse::error([], 'Error: unable to retrieve order payment amount!', 500);
+            }
+
+            // Create the payment data
+            $payment_data = [
+                'name' => $order->full_name,
+                'email' => $order->email,
+                'amount' => round($totalPayAmount, 2),
+                'payment_id' => $order->id,
+                // 'redirect_url' => URL('account/orders'),
+                // 'redirect_url' => config('app.frontend_url'),
+                'redirect_url' => route('transactions.verify'),
+            ];
+
+            $PSP = Paystack::make($payment_data);
+            if ($PSP['success']) {
+                // Record The transaction
+                // 'user_id',
+                // 'order_id',
+                // 'amount',
+                // 'status',
+                // 'reference',
+                // 'payment_method',
+                // 'data'
+
+                // Create the transaction for the order
+                $order->transactions()->create([
+                    'user_id' => $order->user_id,
+                    'order_id' => $order?->id,
+                    'full_name' => $order->full_name,
+                    'email' => $order->email,
+                    'payment_type' => 'order',
+                    'amount' => $totalPayAmount,
+                    'status' => 'pending',
+                    'reference' => $PSP['reference'],
+                    'payment_provider' => $PSP['gateway'],
+                    'data' => json_encode($PSP)
+                ]);
+
+                // Payment link
+                $response = [
+                    'order_id' => $order->id,
+                    'amount' => $totalPayAmount,
+                    // transform data
+                    'order' => new OrderResource($order),
+                    'payment_link' => $PSP['authorization_url'],
+                ];
+
+                // log activity
+                info('order created', [$order]);
+                Activity::create([
+                    'user_id' => ActorHelper::getUserId(),
+                    'description' => 'created order and payment link',
+                    'logs' => $order
+                ]);
+
+                // commit transaction
+                DB::commit();
+
+                // return response
+                return ApiResponse::success($response, 'order created successfully, please make payment to validate your order!', 201, $response);
+            } else {
+                info('payment initialization error: ' . $PSP['message']);
+                return ApiResponse::error([], 'Error: unable to initialize payment process!', 500);
+            }
         } catch (\Throwable $th) {
             DB::rollBack();
             // log error
@@ -143,7 +198,7 @@ class OrderController extends Controller
             // log activity
             info('order updated', [$order]);
             Activity::create([
-                'user_id' => ActorHelper::getUserId()?? null,
+                'user_id' => ActorHelper::getUserId() ?? null,
                 'description' => 'updated order',
                 'logs' => $order
             ]);
@@ -175,7 +230,6 @@ class OrderController extends Controller
 
         // return response
         return ApiResponse::success([], 'Order deleted successfully', 200);
-
     }
 
     /**
@@ -190,7 +244,7 @@ class OrderController extends Controller
         $response = new OrderResource($order);
         // return response
         return ApiResponse::success($response, 'Order confirmed successfully', 200);
-    }  
+    }
 
     /**
      * Cancel order.
@@ -204,7 +258,7 @@ class OrderController extends Controller
         $response = new OrderResource($order);
         // return response
         return ApiResponse::success($response, 'Order cancelled successfully', 200);
-    } 
+    }
 
     /**
      * Get order status.

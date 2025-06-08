@@ -44,5 +44,21 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    /**
+     * Get the transactions associated with the order.
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    
+    /**
+     * Get the activity logs for the order.
+     */
+    // public function activityLogs()
+    // {
+    //     return $this->hasMany(Activity::class, 'subject_id')->where('subject_type', 'App\Models\Order');
+    // }
 
 }

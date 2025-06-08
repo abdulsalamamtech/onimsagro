@@ -23,7 +23,7 @@ class UpdatePaymentAccountRequest extends FormRequest
     {
         return [
             'account_name' => 'nullable|string|max:255',
-            'account_number' => 'nullable|string|max:255',
+            'account_number' => 'nullable|string|min:10|max:10',
             'bank_name' => 'nullable|string|max:255',
             'account_type' => 'nullable|string|in:savings,checking,loan',
             // 'created_by' => 'nullable|exists:users,id',

@@ -21,7 +21,10 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::prefix('admin')->middleware('auth:sanctum')->name('admin.')->group(function () {
+Route::prefix('admin')
+    ->middleware('auth:sanctum')
+    ->name('admin.')
+    ->group(function () {
 
     // Role Routes
     Route::apiResource('roles', RoleController::class);
@@ -41,9 +44,11 @@ Route::prefix('admin')->middleware('auth:sanctum')->name('admin.')->group(functi
     Route::apiResource('user-profiles', UserProfileController::class)
         ->except(['update']);
     // User Profile Update
-    Route::patch('user-profiles/{user}', [UserProfileController::class, 'update'])->name('user-profiles.update');
+    Route::patch('user-profiles/{user}', [UserProfileController::class, 'update'])
+        ->name('user-profiles.update');
     // User Profile Update Authenticated User
-    Route::patch('user-profile', [UserProfileController::class, 'updateProfile'])->name('user-profile.update');
+    Route::patch('user-profile', [UserProfileController::class, 'updateProfile'])
+        ->name('user-profile.update');
 
     // Payment Account Routes
     Route::apiResource('payment-accounts', PaymentAccountController::class);

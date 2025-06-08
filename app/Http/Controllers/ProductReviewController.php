@@ -20,6 +20,11 @@ class ProductReviewController extends Controller
     {
         // get all product reviews
         $product_reviews = ProductReview::with('user', 'product')->latest()->paginate();
+
+        // check if it's empty
+        if ($product_reviews->isEmpty()) {
+            return ApiResponse::error([], 'product reviews not found', 404);
+        }
         // transform data
         $response = ProductReviewResource::collection($product_reviews);
         // return response
@@ -43,7 +48,7 @@ class ProductReviewController extends Controller
 
             // create product review
             $product_review = ProductReview::create($data);
-            
+
             // transform data
             $response = new ProductReviewResource($product_review);
 
@@ -118,7 +123,6 @@ class ProductReviewController extends Controller
         $productReview->delete();
 
         return ApiResponse::success([], 'Product review deleted successfully', 200);
-
     }
 
     /**
@@ -128,9 +132,14 @@ class ProductReviewController extends Controller
     {
         // get all product reviews
         $product_reviews = ProductReview::where('status', 'approved')->with('user', 'product')->latest()->paginate();
+        
+        // check if it's empty
+        if ($product_reviews->isEmpty()) {
+            return ApiResponse::error([], 'product reviews not found', 404);
+        }
         // transform data
         $response = ProductReviewResource::collection($product_reviews);
         // return response
         return ApiResponse::success($response, 200);
-    }    
+    }
 }

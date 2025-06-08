@@ -23,7 +23,7 @@ class StorePaymentAccountRequest extends FormRequest
     {
         return [
             'account_name' => 'required|string|max:255',
-            'account_number' => 'required|string|max:255',
+            'account_number' => 'required|string|min:10|max:10',
             'bank_name' => 'required|string|max:255',
             'account_type' => 'nullable|string|in:savings,checking,loan',
             // 'created_by' => 'nullable|exists:users,id',

@@ -10,11 +10,13 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductReviewController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrainingProgramController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\WarehouseOrderController;
 use App\Http\Controllers\WarehouseReviewController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -30,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 
 // Payment Account Routes
 Route::apiResource('payment-accounts', PaymentAccountController::class)
-->only(['show']);
+->only(['index', 'show']);
 
 // Consultation Routes
 Route::apiResource('consultations', ConsultationController::class)
@@ -68,3 +70,15 @@ Route::get('product-reviews', [WarehouseReviewController::class, 'getReviews']);
 // Warehouse Order Routes
 Route::apiResource('warehouse-orders', WarehouseOrderController::class)
     ->only(['store']);
+
+
+
+
+
+
+
+
+
+// Verify transaction
+Route::get('transactions/verify', [TransactionController::class, 'verifyTransaction'])
+    ->name('transactions.verify');

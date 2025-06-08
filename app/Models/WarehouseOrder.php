@@ -36,4 +36,13 @@ class WarehouseOrder extends Model
     {
         return $this->belongsTo(Warehouse::class);
     } 
+
+
+    /**
+     * Get the transactions associated with the order.
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

@@ -44,6 +44,14 @@ class PaymentAccountController extends Controller
     {
         $data = $request->validated();
 
+        // check if account already exists
+        $existingAccount = PaymentAccount::where('account_number', $data['account_number'])
+            ->where('bank_name', $data['bank_name'])
+            ->first()->exists();
+        if ($existingAccount) {
+            return ApiResponse::error([], 'Payment account already exists', 409);
+        }
+
         try {
             // start transaction
             DB::beginTransaction();
@@ -55,7 +63,7 @@ class PaymentAccountController extends Controller
 
             // commit transaction and log activity 
             DB::commit();
-            info($this, [$paymentAccount]);
+            info('Created payment account', [$paymentAccount]);
             Activity::create([
                 'user_id' => ActorHelper::getUserId() ?? null,
                 'description' => 'created payment account',
@@ -104,7 +112,7 @@ class PaymentAccountController extends Controller
 
             // commit transaction and log activity 
             DB::commit();
-            info($this, [$paymentAccount]);
+            info('Updated payment account', [$paymentAccount]);
             Activity::create([
                 'user_id' => ActorHelper::getUserId() ?? null,
                 'description' => 'updated payment account',
