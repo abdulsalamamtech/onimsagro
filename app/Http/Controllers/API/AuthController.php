@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\User;
@@ -85,10 +86,22 @@ class AuthController extends Controller
     // User Profile API (Protected)
     public function profile(Request $request)
     {
+        $user = $request->user();
+        if (!$user) {
+            Log::error("User not found");
+            return response()->json(['error' => 'User not found'], 404);
+        }
+        $user->load(['userProfile.profileImage']);
+        Activity::create([
+            'user_id' => $user->id,
+            'description' => 'view user profile',
+            'logs' => $user
+        ]);
+        Log::info("User profile retrieved successfully", ['user_id' => $user->id]);
         return response()->json([
             'success' => true,
             'message' => 'successful',
-            'data' => $request->user(),
+            'data' => $user,
         ]);
     }
 
@@ -105,5 +118,24 @@ class AuthController extends Controller
             'success' => true,
             'message' => 'Logout successful.',
         ]);
+    }
+
+    /**
+     * Destroy the user's token.
+     */
+    public function logoutDevices(Request $request)
+    {
+        // $user->tokens()->delete();
+        $request->user()->tokens()->delete();
+        $message = 'You have successfully logged out from all devices.';
+        Activity::create([
+            'user_id' => $request->user()->id,
+            'description' => 'logout user from all devices',
+            'logs' => $request->user()
+        ]);
+        Log::info("User logged out from all devices", ['user_id' => $request->user()->id]);
+        // Return success response
+        return ApiResponse::success([], $message);
+
     }
 }
