@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AssetController;
@@ -34,11 +34,11 @@ use Illuminate\Support\Facades\Route;
 
 // Payment Account Routes
 Route::apiResource('payment-accounts', PaymentAccountController::class)
-->only(['index', 'show']);
+    ->only(['index', 'show']);
 
 // Consultation Routes
 Route::apiResource('consultations', ConsultationController::class)
-->only(['store']);
+    ->only(['store']);
 
 
 // Product Routes
@@ -73,13 +73,6 @@ Route::get('product-reviews', [WarehouseReviewController::class, 'getReviews']);
 Route::apiResource('warehouse-orders', WarehouseOrderController::class)
     ->only(['store']);
 
-
-
-
-
-    // Dashboard Route
-    Route::get('dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard.index');
 
 
 
