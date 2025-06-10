@@ -15,7 +15,6 @@ Route::get('/user', function (Request $request) {
             'token' => $request->bearerToken(),
         ]
     ], 200);
-
 })->middleware('auth:sanctum');
 
 
@@ -26,15 +25,22 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile', [AuthController::class, 'profile']);
     Route::post('/logout', [AuthController::class, 'logout']);
+    /**
+     * Destroy the user's token.
+     * @param token
+     * @return Response 
+     */
+    Route::post('logout-devices', [AuthController::class, 'logoutDevices'])
+        ->name('api.logout-devices');
 });
 
 
 
 // Admin routes
-require __DIR__.'/apis/admin.php';
+require __DIR__ . '/apis/admin.php';
 
 // Quest routes
-require __DIR__.'/apis/quest.php';
+require __DIR__ . '/apis/quest.php';
 
 
 
@@ -44,4 +50,3 @@ Route::get('/sku', function (Request $request) {
         'sku' => \App\Helpers\CustomGenerator::generateUniqueSKU(),
     ]);
 });
-
