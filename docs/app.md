@@ -228,7 +228,19 @@
 
 --------------------------------
 
-
+## Transactions
+- user_id
+- warehouse_order_id (warehouse)
+- order_id (order)
+- payment_type [warehouse | order]
+- full_name
+- email
+- amount
+- status
+- reference
+- payment_method
+- payment_provider
+- data
 
 
 ***WORKING ON THIS***
