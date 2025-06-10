@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FarmingInterestController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentAccountController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\WarehouseOrderController;
 use App\Http\Controllers\WarehouseReviewController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -75,7 +77,9 @@ Route::apiResource('warehouse-orders', WarehouseOrderController::class)
 
 
 
-
+    // Dashboard Route
+    Route::get('dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard.index');
 
 
 

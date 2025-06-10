@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\CloudinaryController;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FarmingInterestController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentAccountController;
@@ -21,10 +22,15 @@ use Illuminate\Support\Facades\Route;
 
 
 
+
 Route::prefix('admin')
     ->middleware('auth:sanctum')
     ->name('admin.')
     ->group(function () {
+
+    // Dashboard Route
+    Route::get('dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard.index');
 
     // Role Routes
     Route::apiResource('roles', RoleController::class);

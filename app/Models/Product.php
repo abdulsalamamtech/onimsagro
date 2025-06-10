@@ -54,6 +54,15 @@ class Product extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    // product reviews
+    /**
+     * Get the reviews for the product.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(ProductReview::class);
+    }
+
     /**
      * Get the images for the product.
      */

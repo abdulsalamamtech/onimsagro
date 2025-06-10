@@ -83,4 +83,15 @@ class Warehouse extends Model
         }
         return $query;
     }
+
+    // warehouse orders
+    public function warehouseOrders()
+    {
+        return $this->hasMany(WarehouseOrder::class, 'warehouse_id');
+    }
+    // warehouse reviews
+    public function warehouseReviews()
+    {
+        return $this->hasMany(WarehouseReview::class);
+    }
 }
