@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TypeOfFarming extends Model
 {
     use SoftDeletes;
-    
+
     protected $fillable = ['name', 'created_by'];
 
     protected $casts = [
@@ -18,7 +18,7 @@ class TypeOfFarming extends Model
     /**
      * Get the user that created the type of farming.
      */
-    public function user()
+    public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
     }

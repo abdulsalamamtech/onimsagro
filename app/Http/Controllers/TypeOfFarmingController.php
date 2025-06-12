@@ -15,7 +15,7 @@ class TypeOfFarmingController extends Controller
      */
     public function index()
     {
-        $typeOfFarmings = TypeOfFarming::with('user')->get();
+        $typeOfFarmings = TypeOfFarming::with('createdBy')->get();
 
         // check if there are no type of farmings
         if ($typeOfFarmings->isEmpty()) {
@@ -53,6 +53,8 @@ class TypeOfFarmingController extends Controller
      */
     public function show(TypeOfFarming $typeOfFarming)
     {
+        // load the createdBy relationship
+        $typeOfFarming->load('createdBy');
         $response = new TypeOfFarmingResource($typeOfFarming);
 
         return ApiResponse::success($response, 'Type of farming retrieved successfully', 200, $typeOfFarming);
