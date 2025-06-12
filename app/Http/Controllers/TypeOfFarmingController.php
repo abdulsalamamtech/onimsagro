@@ -15,7 +15,7 @@ class TypeOfFarmingController extends Controller
      */
     public function index()
     {
-        $typeOfFarmings = TypeOfFarming::with('createdBy')->get();
+        $typeOfFarmings = TypeOfFarming::get();
 
         // check if there are no type of farmings
         if ($typeOfFarmings->isEmpty()) {
