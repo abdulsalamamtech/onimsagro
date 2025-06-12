@@ -11,7 +11,7 @@ class UpdateFarmerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,21 @@ class UpdateFarmerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:farmers,email,' . $this->route('farmer')->id],
+            'phone' => ['required', 'string', 'max:15'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'type_of_farming_id' => ['required', 'exists:type_of_farmings,id'],
+            'farm_name' => ['nullable', 'string', 'max:255'],
+            'farm_size' => ['nullable', 'numeric', 'min:0'],
+            'main_products' => ['nullable', 'string', 'max:255'],
+            'do_you_own_farming_equipment' => ['required', 'in:yes,no'],
+            'where_do_you_sell_your_products' => ['nullable', 'string'],
+            'challenge_in_selling_your_products' => ['nullable', 'string'],
+            'additional_comment' => ['nullable', 'string'],
+            'country' => ['nullable', 'string', 'max:100', 'default:Nigeria'],
+            // State is optional
+            'state' => ['nullable', 'string', 'max:100'],
         ];
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\AssetController;
 use App\Http\Controllers\CloudinaryController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FarmerController;
 use App\Http\Controllers\FarmingInterestController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentAccountController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\WarehouseOrderController;
 use App\Http\Controllers\WarehouseReviewController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -121,6 +123,9 @@ Route::prefix('admin')
     // Restore type of farming
     // Route::delete('type-of-farmings/{id}/force-delete', [TypeOfFarmingController::class, 'forceDelete'])->name('type-of-farmings.force-delete');
 
+    // Farmer Types Routes
+    Route::apiResource('farmer', FarmerController::class)
+        ->except(['destroy']);
 });
 
 

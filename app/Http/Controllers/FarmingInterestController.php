@@ -24,7 +24,7 @@ class FarmingInterestController extends Controller
         // transform data
         $response = FarmingInterestResource::collection($farming_interests);
         // return response
-        return ApiResponse::success($response, 200);
+        return ApiResponse::success($response, 'successful', 200);
     }
 
     /**

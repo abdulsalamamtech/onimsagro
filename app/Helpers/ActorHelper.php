@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Helpers;
 
@@ -8,15 +8,17 @@ use App\Models\Api\Marketer;
 use App\Models\Api\Refinery;
 use App\Models\Api\Transporter;
 
-class ActorHelper {
+class ActorHelper
+{
 
     /** 
      * Retrieve user ID from authenticated user and return.
      */
-    public static function getUserId(){
+    public static function getUserId()
+    {
         // Implement logic to fetch user ID from authenticated actor
         // Return the user ID as a string
-        return request()?->user()?->id ?? 1;
+        return request()?->user()?->id;
         // return request()?->user()?->id;
 
     }
