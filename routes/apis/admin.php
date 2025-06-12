@@ -14,11 +14,13 @@ use App\Http\Controllers\ProductReviewController;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrainingProgramController;
+use App\Http\Controllers\TypeOfFarmingController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\WarehouseOrderController;
 use App\Http\Controllers\WarehouseReviewController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -107,6 +109,17 @@ Route::prefix('admin')
     Route::patch('warehouse-orders/{warehouseOrder}/confirm', [WarehouseOrderController::class, 'confirmOrder'])->name('warehouse-orders.confirm');
     Route::patch('warehouse-orders/{warehouseOrder}/cancel', [WarehouseOrderController::class, 'cancelOrder'])->name('warehouse-orders.cancel');
     Route::get('warehouse-order-status', [WarehouseOrderController::class, 'getOrderStatus'])->name('warehouse-orders.status');
+
+
+    // Farming Types Routes
+    Route::apiResource('type-of-farmings', TypeOfFarmingController::class)
+        ->except(['destroy']);
+    // Trashed type of farming
+    // Route::get('type-of-farmings-trashed', [TypeOfFarmingController::class, 'trashed'])->name('type-of-farmings.trashed');
+    // Restore type of farming
+    // Route::patch('type-of-farmings/{id}/restore', [TypeOfFarmingController::class, 'restore'])->name('type-of-farmings.restore');
+    // Restore type of farming
+    // Route::delete('type-of-farmings/{id}/force-delete', [TypeOfFarmingController::class, 'forceDelete'])->name('type-of-farmings.force-delete');
 
 });
 
