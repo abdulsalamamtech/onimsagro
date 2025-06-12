@@ -28,14 +28,15 @@ return new class extends Migration
             // -   additional_comment
             $table->id();
             $table->string('full_name');
-            $table->string('phone_number')->unique();
+            $table->string('phone_number');
             $table->string('email')->unique()->nullable();
-            $table->string('country')->nullable()->default('Nigeria'); // Default to Nigeria, can be changed later
-            $table->string('state')->nullable();
             $table->string('address')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable()->default('Nigeria'); // Default to Nigeria, can be changed later
             $table->string('farm_name')->nullable();
-            $table->decimal('farm_size', 8, 2)->nullable(); // Assuming farm size is in acres or hectares
-            $table->foreignId('type_of_farming_id')->nullable()->constrained('type_of_farmings')->onDelete('null');
+            $table->decimal('farm_size', 10, 2)->nullable(); // Assuming farm size is in acres or hectares
+            $table->string('farm_size_unit')->default('acres');
+            $table->foreignId('type_of_farming_id')->nullable()->constrained('type_of_farmings')->nullOnDelete();
             $table->string('main_products')->nullable(); // Comma-separated list of main products
             $table->enum('do_you_own_farming_equipment', ['yes', 'no'])->default('no');
             $table->text('where_do_you_sell_your_products')->nullable();

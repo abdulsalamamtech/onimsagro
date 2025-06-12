@@ -44,6 +44,7 @@ class FarmerController extends Controller
         // create data
         // $data['created_by'] = auth()->id();
         $data['created_by'] = ActorHelper::getUserId();
+
         try {
             //code...
             DB::beginTransaction();

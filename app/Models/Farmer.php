@@ -33,6 +33,7 @@ class Farmer extends Model
         'address',
         'farm_name',
         'farm_size',
+        'farm_size_unit',
         'type_of_farming_id',
         'main_products',
         'do_you_own_farming_equipment',
