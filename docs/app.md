@@ -217,8 +217,6 @@
 -   payment_provider
 -   data
 
-## **_WORKING ON THIS_**
-
 ## [type_of_farmings]
 
 -   name [
@@ -246,6 +244,10 @@
 -   additional_comment
 
 ---
+
+
+## **_WORKING ON THIS_**
+
 
 ## [assistance_types]
 
@@ -280,8 +282,8 @@
 ## [equipment_types]
 
 -   name [
-        tractor
-        shovel
+    tractor
+    shovel
     ]
 
 ## rental_services
@@ -341,12 +343,17 @@
 
 ## socials
 
+- name
+- url
+- status
+
     facebook_url
     x_url
     linkedin_url
     instagram_url
     youtube_url
     whatsapp_url
+
 
 ## fags
 
