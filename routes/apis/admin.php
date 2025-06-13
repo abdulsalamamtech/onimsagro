@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AssetController;
@@ -32,101 +32,101 @@ Route::prefix('admin')
     ->name('admin.')
     ->group(function () {
 
-    // Dashboard Route
-    Route::get('dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard.index');
+        // Dashboard Route
+        Route::get('dashboard', [DashboardController::class, 'index'])
+            ->name('dashboard.index');
 
-    // Role Routes
-    Route::apiResource('roles', RoleController::class);
-
-
-    // Activity Routes
-    Route::apiResource('activities', ActivityController::class)
-        ->only(['index', 'show']);
-
-    // User Routes
-    // Route::apiResource('users', UserController::class);
-
-    // Asset Routes
-    Route::apiResource('assets', AssetController::class);
-
-    // User Profile Routes
-    Route::apiResource('user-profiles', UserProfileController::class)
-        ->except(['update']);
-    // User Profile Update
-    Route::post('user-profiles/{user}/update', [UserProfileController::class, 'updateUserProfile'])
-        ->name('user-profiles.update');
-    // User Profile Update Authenticated User
-    Route::post('update-user-profile', [UserProfileController::class, 'updateProfile'])
-        ->name('user-profile.update');
-
-    // Payment Account Routes
-    Route::apiResource('payment-accounts', PaymentAccountController::class);
-
-    // Consultation Routes
-    Route::apiResource('consultations', ConsultationController::class);
-
-    // Product categories Routes
-    Route::apiResource('product-categories', ProductCategoryController::class);
-
-    // Product Types Routes
-    Route::apiResource('product-types', ProductTypeController::class);
+        // Role Routes
+        Route::apiResource('roles', RoleController::class);
 
 
-    // Product Routes
-    Route::apiResource('products', ProductController::class);
-    // Trashed product
-    Route::get('product-trashed', [ProductController::class, 'trashed'])->name('products.trashed');
-    // Restore product
-    Route::patch('products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
+        // Activity Routes
+        Route::apiResource('activities', ActivityController::class)
+            ->only(['index', 'show']);
+
+        // User Routes
+        // Route::apiResource('users', UserController::class);
+
+        // Asset Routes
+        Route::apiResource('assets', AssetController::class);
+
+        // User Profile Routes
+        Route::apiResource('user-profiles', UserProfileController::class)
+            ->except(['update']);
+        // User Profile Update
+        Route::post('user-profiles/{user}/update', [UserProfileController::class, 'updateUserProfile'])
+            ->name('user-profiles.update');
+        // User Profile Update Authenticated User
+        Route::post('update-user-profile', [UserProfileController::class, 'updateProfile'])
+            ->name('user-profile.update');
+
+        // Payment Account Routes
+        Route::apiResource('payment-accounts', PaymentAccountController::class);
+
+        // Consultation Routes
+        Route::apiResource('consultations', ConsultationController::class);
+
+        // Product categories Routes
+        Route::apiResource('product-categories', ProductCategoryController::class);
+
+        // Product Types Routes
+        Route::apiResource('product-types', ProductTypeController::class);
 
 
-    // Product reviews Routes
-    Route::apiResource('product-reviews', ProductReviewController::class);
-
-    // Order Routes
-    Route::apiResource('orders', OrderController::class);
-    Route::patch('orders/{order}/confirm', [OrderController::class, 'confirmOrder'])->name('orders.confirm');
-    Route::patch('orders/{order}/cancel', [OrderController::class, 'cancelOrder'])->name('orders.cancel');
-    Route::get('order-status', [OrderController::class, 'getOrderStatus'])->name('orders.status');
-
-    // Farming interest
-    Route::apiResource('farming-interests', FarmingInterestController::class);
-
-    // Training program
-    Route::apiResource('training-programs', TrainingProgramController::class);
-
-    // Warehouse Routes
-    Route::apiResource('warehouses', WarehouseController::class);
-    // Trashed product
-    Route::get('warehouse-trashed', [WarehouseController::class, 'trashed'])->name('warehouses.trashed');
-    // Restore product
-    Route::patch('warehouses/{id}/restore', [WarehouseController::class, 'restore'])->name('warehouses.restore');
-
-    // Warehouse Reviews Routes
-    Route::apiResource('warehouse-reviews', WarehouseReviewController::class);
-
-    // Warehouse Order Routes
-    Route::apiResource('warehouse-orders', WarehouseOrderController::class);
-    Route::patch('warehouse-orders/{warehouseOrder}/confirm', [WarehouseOrderController::class, 'confirmOrder'])->name('warehouse-orders.confirm');
-    Route::patch('warehouse-orders/{warehouseOrder}/cancel', [WarehouseOrderController::class, 'cancelOrder'])->name('warehouse-orders.cancel');
-    Route::get('warehouse-order-status', [WarehouseOrderController::class, 'getOrderStatus'])->name('warehouse-orders.status');
+        // Product Routes
+        Route::apiResource('products', ProductController::class);
+        // Trashed product
+        Route::get('product-trashed', [ProductController::class, 'trashed'])->name('products.trashed');
+        // Restore product
+        Route::patch('products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
 
 
-    // Farming Types Routes
-    Route::apiResource('type-of-farmings', TypeOfFarmingController::class)
-        ->except(['destroy']);
-    // Trashed type of farming
-    // Route::get('type-of-farmings-trashed', [TypeOfFarmingController::class, 'trashed'])->name('type-of-farmings.trashed');
-    // Restore type of farming
-    // Route::patch('type-of-farmings/{id}/restore', [TypeOfFarmingController::class, 'restore'])->name('type-of-farmings.restore');
-    // Restore type of farming
-    // Route::delete('type-of-farmings/{id}/force-delete', [TypeOfFarmingController::class, 'forceDelete'])->name('type-of-farmings.force-delete');
+        // Product reviews Routes
+        Route::apiResource('product-reviews', ProductReviewController::class);
 
-    // Farmer Types Routes
-    Route::apiResource('farmer', FarmerController::class)
-        ->except(['destroy']);
-});
+        // Order Routes
+        Route::apiResource('orders', OrderController::class);
+        Route::patch('orders/{order}/confirm', [OrderController::class, 'confirmOrder'])->name('orders.confirm');
+        Route::patch('orders/{order}/cancel', [OrderController::class, 'cancelOrder'])->name('orders.cancel');
+        Route::get('order-status', [OrderController::class, 'getOrderStatus'])->name('orders.status');
+
+        // Farming interest
+        Route::apiResource('farming-interests', FarmingInterestController::class);
+
+        // Training program
+        Route::apiResource('training-programs', TrainingProgramController::class);
+
+        // Warehouse Routes
+        Route::apiResource('warehouses', WarehouseController::class);
+        // Trashed product
+        Route::get('warehouse-trashed', [WarehouseController::class, 'trashed'])->name('warehouses.trashed');
+        // Restore product
+        Route::patch('warehouses/{id}/restore', [WarehouseController::class, 'restore'])->name('warehouses.restore');
+
+        // Warehouse Reviews Routes
+        Route::apiResource('warehouse-reviews', WarehouseReviewController::class);
+
+        // Warehouse Order Routes
+        Route::apiResource('warehouse-orders', WarehouseOrderController::class);
+        Route::patch('warehouse-orders/{warehouseOrder}/confirm', [WarehouseOrderController::class, 'confirmOrder'])->name('warehouse-orders.confirm');
+        Route::patch('warehouse-orders/{warehouseOrder}/cancel', [WarehouseOrderController::class, 'cancelOrder'])->name('warehouse-orders.cancel');
+        Route::get('warehouse-order-status', [WarehouseOrderController::class, 'getOrderStatus'])->name('warehouse-orders.status');
+
+
+        // Farming Types Routes
+        Route::apiResource('type-of-farmings', TypeOfFarmingController::class)
+            ->except(['destroy']);
+        // Trashed type of farming
+        // Route::get('type-of-farmings-trashed', [TypeOfFarmingController::class, 'trashed'])->name('type-of-farmings.trashed');
+        // Restore type of farming
+        // Route::patch('type-of-farmings/{id}/restore', [TypeOfFarmingController::class, 'restore'])->name('type-of-farmings.restore');
+        // Restore type of farming
+        // Route::delete('type-of-farmings/{id}/force-delete', [TypeOfFarmingController::class, 'forceDelete'])->name('type-of-farmings.force-delete');
+
+        // Farmer Types Routes
+        Route::apiResource('farmers', FarmerController::class)
+            ->except(['destroy']);
+    });
 
 
 // Cloudinary
