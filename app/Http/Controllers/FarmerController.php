@@ -19,7 +19,7 @@ class FarmerController extends Controller
      */
     public function index()
     {
-        $farmers = Farmer::get();
+        $farmers = Farmer::paginate();
 
         // check if there are no farmers
         if ($farmers->isEmpty()) {
@@ -30,7 +30,7 @@ class FarmerController extends Controller
         $response = FarmerResource::collection($farmers);
 
         // return response
-        return ApiResponse::success($response, 'successful', 200);
+        return ApiResponse::success($response, 'successful', 200, $farmers);
 
     }
 
