@@ -245,13 +245,11 @@
 
 ---
 
-
-## **_WORKING ON THIS_**
-
-
 ## [assistance_types]
 
 -   name []
+
+## **_WORKING ON THIS_**
 
 ## farm_assistance
 
@@ -343,9 +341,9 @@
 
 ## socials
 
-- name
-- url
-- status
+-   name
+-   url
+-   status
 
     facebook_url
     x_url
@@ -353,7 +351,6 @@
     instagram_url
     youtube_url
     whatsapp_url
-
 
 ## fags
 
