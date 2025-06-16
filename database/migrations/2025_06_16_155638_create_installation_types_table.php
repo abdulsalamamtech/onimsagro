@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('installation_types', function (Blueprint $table) {
             $table->id();
-            $table->id();
             $table->string('name')->unique();
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();

@@ -34,11 +34,25 @@ formulate the try and catch as a middleware
 
 ## Simple Terminal Commands
 
-````sh
+```sh
 
     php artisan make:model Department -mcrR --api
     php artisan make:resource DepartmentResource
     php artisan make:model WarehouseImage -m
     git commit -m"Add dashboard feature"
 ```
-````
+
+## Validation
+
+```sh
+    info('UpdateInstallationTypeRequest rules called', [
+        'installation_type' => $this->route('installation_type'),
+        'request_data' => $this->all()
+    ]);
+
+    Rule::unique('users')->ignore($user->id);
+    Rule::unique('users')->ignore($user);
+    Rule::unique('users')->withoutTrashed();
+    ['unique:installation_types,name,' . $this->route('installation_type')->id,];
+    ['unique:installation_types,name,' . $this->route('installation_type')->id . ',id'];
+```

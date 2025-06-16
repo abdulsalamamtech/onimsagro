@@ -21,8 +21,9 @@ class UpdateInstallationTypeRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
-            'name' => 'required|string|max:255|unique:installation_types,name,' . $this->route('installation_type')->id,
+            'name' => 'required|string|max:255|unique:installation_types,name,' . $this->route('installation_type')->id . ',id',
         ];
     }
 }

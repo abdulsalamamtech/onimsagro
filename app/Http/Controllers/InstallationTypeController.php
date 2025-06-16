@@ -72,7 +72,7 @@ class InstallationTypeController extends Controller
     {
         // load relationship
         $installationType->load('createdBy');
-        
+
         // transform data
         $response = new InstallationTypeResource($installationType);
 
