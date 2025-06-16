@@ -16,7 +16,7 @@ class FarmAssistanceController extends Controller
      */
     public function index()
     {
-        $farmAssistance = FarmAssistance::paginate();
+        $farmAssistance = FarmAssistance::with(['assistanceType'])->paginate();
 
         // check if there are no farm assistance requests
         if ($farmAssistance->isEmpty()) {
@@ -68,6 +68,9 @@ class FarmAssistanceController extends Controller
         if (!$farmAssistance) {
             return ApiResponse::error([], 'Farm assistance request not found', 404);
         }
+
+        // load relationships
+        $farmAssistance->load(['assistanceType', 'createdBy']);
 
         // transform data
         $response = new FarmAssistanceResource($farmAssistance);
