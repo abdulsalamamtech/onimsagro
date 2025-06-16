@@ -6,6 +6,7 @@ use App\Http\Controllers\AssistanceTypeController;
 use App\Http\Controllers\CloudinaryController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FarmAssistanceController;
 use App\Http\Controllers\FarmerController;
 use App\Http\Controllers\FarmingInterestController;
 use App\Http\Controllers\OrderController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\WarehouseOrderController;
 use App\Http\Controllers\WarehouseReviewController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -131,6 +133,10 @@ Route::prefix('admin')
 
         // Assistance Types Routes
         Route::apiResource('assistance-types', AssistanceTypeController::class)
+            ->except(['destroy']);
+
+        // Farmer Assistance Routes
+        Route::apiResource('farm-assistances', FarmAssistanceController::class)
             ->except(['destroy']);
     });
 

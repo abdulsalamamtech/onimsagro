@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\AssistanceTypeController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FarmAssistanceController;
 use App\Http\Controllers\FarmerController;
 use App\Http\Controllers\FarmingInterestController;
 use App\Http\Controllers\OrderController;
@@ -19,6 +21,8 @@ use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\WarehouseOrderController;
 use App\Http\Controllers\WarehouseReviewController;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -86,6 +90,16 @@ Route::apiResource('type-of-farmings', TypeOfFarmingController::class)
 // Farmer store
 Route::post('farmers', [FarmerController::class, 'store'])
     ->name('farmers.store');
+    
+// Assistance type Routes
+Route::apiResource('assistance-types', AssistanceTypeController::class)
+    ->only(['index']);
+
+// Assistance Routes
+Route::apiResource('farm-assistances', FarmAssistanceController::class)
+    ->only(['store']);
+
+
 
 // Verify transaction
 Route::get('transactions/verify', [TransactionController::class, 'verifyTransaction'])
