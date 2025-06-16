@@ -23,6 +23,10 @@ class ProductTypeController extends Controller
         // get all product types
         $productTypes = ProductType::latest()->paginate(10);
 
+        // if not exists
+        if ($productTypes->isEmpty()) {
+            return ApiResponse::error([], 'No product types found', 404);
+        }
         // transform data
         $response = ProductTypeResource::collection($productTypes);
 
