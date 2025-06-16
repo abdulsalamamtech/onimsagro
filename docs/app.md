@@ -298,6 +298,7 @@
 -   location
 -   notes
 -   duration [7, 14 days]
+-   status
 
 ---
 

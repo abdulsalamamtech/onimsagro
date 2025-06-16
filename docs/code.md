@@ -1,7 +1,5 @@
-
-
-
 ## Application Setup Commands
+
 ```sh
     composer create-project laravel/laravel app
     cd app
@@ -21,12 +19,10 @@
 
 ```
 
-
 OtpToken
 Activity
 Asset
 UserProfile
-
 
 formulate the try and catch as a middleware
 // 'error' => $e->getMessage(),
@@ -36,11 +32,13 @@ formulate the try and catch as a middleware
 // 'request_url' => request()->url(),
 // 'request_ip' => request()->ip(),
 
-
 ## Simple Terminal Commands
+
 ````sh
 
     php artisan make:model Department -mcrR --api
     php artisan make:resource DepartmentResource
     php artisan make:model WarehouseImage -m
+    git commit -m"Add dashboard feature"
 ```
+````
