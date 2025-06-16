@@ -42,6 +42,8 @@ return new class extends Migration
             $table->text('where_do_you_sell_your_products')->nullable();
             $table->text('challenge_in_selling_your_products')->nullable();
             $table->text('additional_comment')->nullable();
+            // status
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
             $table->softDeletes(); // For soft delete functionality

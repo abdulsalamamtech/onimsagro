@@ -11,7 +11,7 @@ class StoreFarmAssistanceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreFarmAssistanceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'full_name' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:15',
+            'email' => 'required|email|max:255',
+            'assistance_type_id' => 'required|exists:assistance_types,id',
+            'reason_for_request' => 'required|string|max:1000',
         ];
     }
 }

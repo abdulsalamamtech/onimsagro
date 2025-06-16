@@ -11,7 +11,7 @@ use App\Models\AssistanceType;
 class AssistanceTypeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * [public] Display a listing of the resource.
      */
     public function index()
     {
