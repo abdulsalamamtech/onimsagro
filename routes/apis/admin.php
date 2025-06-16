@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FarmAssistanceController;
 use App\Http\Controllers\FarmerController;
 use App\Http\Controllers\FarmingInterestController;
+use App\Http\Controllers\InstallationTypeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentAccountController;
 use App\Http\Controllers\ProductCategoryController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\WarehouseOrderController;
 use App\Http\Controllers\WarehouseReviewController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -137,6 +139,10 @@ Route::prefix('admin')
 
         // Farmer Assistance Routes
         Route::apiResource('farm-assistances', FarmAssistanceController::class)
+            ->except(['destroy']);
+        
+        // Installation Types Routes
+        Route::apiResource('installation-types', InstallationTypeController::class)
             ->except(['destroy']);
     });
 
