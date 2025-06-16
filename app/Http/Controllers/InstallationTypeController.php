@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 class InstallationTypeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * [public] Display a listing of the resource.
      */
     public function index()
     {

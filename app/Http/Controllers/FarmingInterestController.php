@@ -21,10 +21,15 @@ class FarmingInterestController extends Controller
     {
         // get all product reviews
         $farming_interests = FarmingInterest::with('createdBy')->latest()->paginate();
+        // check if exists
+        if ($farming_interests->isEmpty()) {
+            // return empty response
+            return ApiResponse::success([], 'no farming interests found', 204);
+        }
         // transform data
         $response = FarmingInterestResource::collection($farming_interests);
         // return response
-        return ApiResponse::success($response, 'successful', 200);
+        return ApiResponse::success($response, 'successful', 200, $farming_interests);
     }
 
     /**

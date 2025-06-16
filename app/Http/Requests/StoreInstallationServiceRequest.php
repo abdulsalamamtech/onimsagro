@@ -11,7 +11,7 @@ class StoreInstallationServiceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class StoreInstallationServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'full_name' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
+            'farm_size' => 'required|string|max:50',
+            'installation_type_id' => 'nullable|exists:installation_types,id',
+            'form_location' => 'required|string|max:255',
+            'notes' => 'nullable|string|max:1000',
+            'status' => 'nullable|in:pending,approved,rejected,completed',
         ];
     }
 }

@@ -249,7 +249,6 @@
 
 -   name []
 
-
 ## farm_assistance
 
 -   full_name
@@ -257,11 +256,6 @@
 -   email
 -   assistance_types_id
 -   reason_for_request
-
-
-
-## **_WORKING ON THIS_**
-
 
 ## [installation_types]
 
@@ -280,6 +274,9 @@
 -   installation_type_id
 -   form_location
 -   notes
+-   status
+
+## **_WORKING ON THIS_**
 
 ## [equipment_types]
 
