@@ -32,7 +32,10 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('phone_number');
             $table->string('email');
-            $table->string('farm_size');
+            // 'farm_size_unit' => ['nullable','in:acres,hectares,plots'],
+            $table->decimal('farm_size', 10, 2)->nullable(); // Assuming farm size is in acres or hectares
+            $table->string('farm_size_unit')->nullable()->default('acres');
+
             $table->string('equipment_type_id');
             $table->string('address');
             $table->string('state');
