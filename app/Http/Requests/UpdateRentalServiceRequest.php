@@ -25,7 +25,7 @@ class UpdateRentalServiceRequest extends FormRequest
             'full_name' => ['required', 'string', 'max:255'],
             'phone_number' => ['required', 'string', 'max:15'],
             'email' => ['required', 'email', 'max:255'],
-            'farm_size' => ['nullable', 'numeric', '0.001'],
+            'farm_size' => ['nullable', 'numeric', 'min:0.001'],
             'farm_size_unit' => ['nullable', 'in:acres,hectares,plots'],
             'equipment_type_id' => ['required', 'exists:equipment_types,id'],
             'renting_purpose' => ['required', 'string', 'max:2000'],

@@ -25,15 +25,15 @@ class StoreRentalServiceRequest extends FormRequest
             'full_name' => ['required', 'string', 'max:255'],
             'phone_number' => ['required', 'string', 'max:15'],
             'email' => ['required', 'email', 'max:255'],
-            'farm_size' => ['nullable', 'numeric', '0.001'],
+            'farm_size' => ['nullable', 'numeric', 'min:0.01'],
             'farm_size_unit' => ['nullable','in:acres,hectares,plots'],
             'equipment_type_id' => ['required', 'exists:equipment_types,id'],
             'renting_purpose' => ['required', 'string', 'max:2000'],
             'address' => ['required', 'string', 'max:255'],
             'state' => ['required', 'string', 'max:100'],
             'duration' => ['required', 'integer', 'min:1'],
-            // duration unit enum of days, weeks, months, years
             'duration_unit' => ['required', 'string', 'in:days,weeks,months,years'],
+            // duration unit enum of days, weeks, months, years
             // 'amount',
             // 'notes', // by admin
             // 'status', // by admin
