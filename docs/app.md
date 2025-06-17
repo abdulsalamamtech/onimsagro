@@ -289,6 +289,7 @@
 -   phone_number
 -   email
 -   farm_size
+-   farm_size_unit
 -   equipment_type_id
 -   address
 -   state
