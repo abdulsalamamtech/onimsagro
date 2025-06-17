@@ -56,3 +56,11 @@ formulate the try and catch as a middleware
     ['unique:installation_types,name,' . $this->route('installation_type')->id,];
     ['unique:installation_types,name,' . $this->route('installation_type')->id . ',id'];
 ```
+
+## Terminal command
+
+```sh
+    php artisan migrate:refresh --step=2
+    # php artisan migrate:fresh # First time installation
+    # php artisan db:seed
+```
