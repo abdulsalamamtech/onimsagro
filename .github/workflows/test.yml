@@ -31,6 +31,8 @@ jobs:
             composer install  # Install dependencies
             # php artisan migrate:fresh # First time installation
             # php artisan db:seed
+            php artisan migrate:refresh --step=2
+
             php artisan migrate --force  # Migrate the database
             php artisan cache:clear  # Clear the cache
             php artisan view:clear  # Clear the view cache
