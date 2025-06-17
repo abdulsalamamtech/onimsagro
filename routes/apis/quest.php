@@ -5,6 +5,7 @@ use App\Http\Controllers\AssetController;
 use App\Http\Controllers\AssistanceTypeController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EquipmentTypeController;
 use App\Http\Controllers\FarmAssistanceController;
 use App\Http\Controllers\FarmerController;
 use App\Http\Controllers\FarmingInterestController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\WarehouseOrderController;
 use App\Http\Controllers\WarehouseReviewController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -111,9 +113,13 @@ Route::apiResource('installation-types', InstallationTypeController::class)
 Route::apiResource('installation-services', InstallationServiceController::class)
     ->only(['store']);
 
+// Equipment Types Routes
+Route::apiResource('equipment-types', EquipmentTypeController::class)
+    ->only(['index']);
 
 
-    
+
+
 // Verify transaction
 Route::get('transactions/verify', [TransactionController::class, 'verifyTransaction'])
     ->name('transactions.verify');
