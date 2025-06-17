@@ -15,7 +15,7 @@ class InstallationService extends Model
         'email',
         'farm_size',
         'installation_type_id',
-        'form_location',
+        'farm_location',
         'notes',
         'status',
     ];

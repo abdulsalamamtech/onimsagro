@@ -27,7 +27,7 @@ class UpdateInstallationServiceRequest extends FormRequest
             'email' => 'required|email|max:255',
             'farm_size' => 'required|string|max:50',
             'installation_type_id' => 'nullable|exists:installation_types,id',
-            'form_location' => 'required|string|max:255',
+            'farm_location' => 'required|string|max:255',
             'notes' => 'nullable|string|max:1000',
             'status' => 'nullable|in:pending,approved,rejected,completed',
         ];

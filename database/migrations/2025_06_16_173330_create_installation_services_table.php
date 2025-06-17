@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('farm_size');
             $table->foreignId('installation_type_id')->nullable()->constrained('installation_types')->nullOnDelete();
-            $table->string('form_location');
+            $table->string('farm_location');
             $table->text('notes')->nullable();
             // status
             $table->enum('status', ['pending', 'approved', 'rejected', 'completed'])->default('pending');
