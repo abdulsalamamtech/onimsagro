@@ -18,6 +18,7 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductReviewController;
 use App\Http\Controllers\ProductTypeController;
+use App\Http\Controllers\RentalServiceController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\TypeOfFarmingController;
@@ -155,6 +156,10 @@ Route::prefix('admin')
 
         // Equipment Types Routes
         Route::apiResource('equipment-types', EquipmentTypeController::class)
+            ->except(['destroy']);
+
+        // Rental Service Routes
+        Route::apiResource('rental-services', RentalServiceController::class)
             ->except(['destroy']);
     });
 

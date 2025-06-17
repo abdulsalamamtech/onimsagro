@@ -15,6 +15,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentAccountController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductReviewController;
+use App\Http\Controllers\RentalServiceController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\TransactionController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\WarehouseOrderController;
 use App\Http\Controllers\WarehouseReviewController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -96,7 +98,7 @@ Route::apiResource('type-of-farmings', TypeOfFarmingController::class)
 // Farmer store
 Route::post('farmers', [FarmerController::class, 'store'])
     ->name('farmers.store');
-    
+
 // Assistance type Routes
 Route::apiResource('assistance-types', AssistanceTypeController::class)
     ->only(['index']);
@@ -116,6 +118,11 @@ Route::apiResource('installation-services', InstallationServiceController::class
 // Equipment Types Routes
 Route::apiResource('equipment-types', EquipmentTypeController::class)
     ->only(['index']);
+
+// Rental Service Routes
+Route::apiResource('rental-services', RentalServiceController::class)
+    ->only(['store']);
+
 
 
 
