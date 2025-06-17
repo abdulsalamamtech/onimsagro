@@ -27,7 +27,6 @@ jobs:
             composer install  # Install dependencies
             
             # php artisan db:seed
-            php artisan migrate:refresh --step=2
             
             php artisan migrate --force  # Migrate the database
             php artisan optimize:clear  # Clear the optimization
@@ -35,6 +34,7 @@ jobs:
             php artisan view:clear  # Clear the view cache
             php artisan route:clear  # Clear the route cache
             php artisan optimize  # Optimize the app
+            
             # npm install  # Install dependencies
             # npm run build  # Build the Node app
           EOF
