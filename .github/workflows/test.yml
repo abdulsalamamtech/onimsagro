@@ -29,7 +29,6 @@ jobs:
             git clean -f # Clean the file system
             
             composer install  # Install dependencies
-            php artisan migrate:refresh --step=1
            
             php artisan migrate --force  # Migrate the database
             php artisan cache:clear  # Clear the cache
