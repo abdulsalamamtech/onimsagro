@@ -276,8 +276,6 @@
 -   notes
 -   status
 
-## **_WORKING ON THIS_**
-
 ## [equipment_types]
 
 -   name [
@@ -292,12 +290,29 @@
 -   email
 -   farm_size
 -   equipment_type_id
--   location
--   notes
+-   address
+-   state
+-   renting_purpose
 -   duration [7, 14 days]
+-   duration_unit ['days', 'weeks', 'months', 'years']
+-   amount
+-   notes
 -   status
+-   created_by
+-   updated_by
+
+## **_WORKING ON THIS_**
 
 ---
+
+## fags
+
+-   question
+-   answer
+
+## newsletters
+
+-   email
 
 ## blogs
 
@@ -337,10 +352,6 @@
     asset_id
         assets.url
 
-## newsletters
-
-    email
-
 ## socials
 
 -   name
@@ -353,8 +364,3 @@
     instagram_url
     youtube_url
     whatsapp_url
-
-## fags
-
-    question
-    answer
