@@ -22,7 +22,7 @@ class InstallationServiceController extends Controller
         // check if exists
         if ($installationServices->isEmpty()) {
             // return empty response
-            return ApiResponse::success([], 'no installation services found', 204);
+            return ApiResponse::success([], 'no installation services found', 404);
         }
         // transform data
         $response = InstallationServiceResource::collection($installationServices);
