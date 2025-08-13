@@ -32,6 +32,8 @@ class UpdateProductRequest extends FormRequest
             'stock' => 'nullable|integer|min:0',
             'tag' => 'nullable|string|max:255',
             'location' => 'nullable|string|max:255',
+            'moq' => 'nullable|string|max:5000',
+            'specs' => 'nullable|string|max:5000',
             'estimated_delivery' => 'nullable|integer|min:1',
             'status' => 'nullable|in:active,inactive',
         ];

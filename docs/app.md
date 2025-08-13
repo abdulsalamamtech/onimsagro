@@ -127,6 +127,9 @@
 -   product_type_id []
 -   category_id []
 
+-   moq, or Minimum Order Quantity, is the smallest number of units a supplier will sell in a single order.
+-   specs generally refers to the product specifications or technical details of an item being sold online
+
 ## product_images[]
 
 ## product_reviews

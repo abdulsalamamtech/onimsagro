@@ -22,6 +22,8 @@ class Product extends Model
         'tag',
         'location',
         'estimated_delivery',
+        'moq',
+        'specs',
         'status',
         'created_by'
     ];
