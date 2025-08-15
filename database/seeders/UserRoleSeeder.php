@@ -25,5 +25,9 @@ class UserRoleSeeder extends Seeder
             );
 
         }
+        $this->call([
+            DatabaseSeeder::class,
+            // Add other seeders here
+        ]);
     }
 }
