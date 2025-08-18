@@ -29,7 +29,7 @@ jobs:
             git clean -f # Clean the file system
             git pull origin main  # Pull the latest changes from main branch
             composer install  # Install dependencies
-            
+            php artisan migrate:rollback --batch=2
             php artisan migrate:refresh --step=3  # Refresh last 2 database
             
             php artisan migrate --force  # Migrate the database
