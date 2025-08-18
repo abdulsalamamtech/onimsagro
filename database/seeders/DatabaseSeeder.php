@@ -20,18 +20,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-
-        // $this->call(UserRoleSeeder::class);
+        // From top to bottom
+        $this->call(UserRoleSeeder::class);
+        $this->call(AdminSeeder::class);
         // php artisan db:seed
 
-        if (!User::where('email', 'abdulsalamamtech@gmail.com')->exists()) {
-            $user = User::create([
-                'name' => 'Admin User',
-                'email' => 'abdulsalamamtech@gmail.com',
-                'password' => bcrypt('password'), // Use bcrypt for password hashing by default
-                'email_verified_at' => now(),
-            ]);
-            $user->assignRole('super-admin');
-        }
     }
 }

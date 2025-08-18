@@ -25,8 +25,10 @@ class UserRoleSeeder extends Seeder
             );
 
         }
+
+        // Run this after the above seeder has been executed
         $this->call([
-            DatabaseSeeder::class,
+            AdminSeeder::class,
             // Add other seeders here
         ]);
     }
