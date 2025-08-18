@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('admin')
-    ->middleware('auth:sanctum')
+    ->middleware(['auth:sanctum', 'role:super-admin'])
     ->name('admin.')
     ->group(function () {
 
@@ -145,7 +145,7 @@ Route::prefix('admin')
         // Farmer Assistance Routes
         Route::apiResource('farm-assistances', FarmAssistanceController::class)
             ->except(['destroy']);
-        
+
         // Installation Types Routes
         Route::apiResource('installation-types', InstallationTypeController::class)
             ->except(['destroy']);
