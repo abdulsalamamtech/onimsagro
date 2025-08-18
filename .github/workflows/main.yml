@@ -23,14 +23,9 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST_IP }} << 'EOF'
             cd ${{ secrets.APP_PATH }} # Navigate to the staging folder
 
-            git fetch origin # Fetch the latest version
-            git reset --hard origin/main  # Reset to the latest commit on main branch
-            git pull origin main  # Pull the latest changes from main branch
-            git clean -f # Clean the file system
             git pull origin main  # Pull the latest changes from main branch
             composer install  # Install dependencies
-            php artisan migrate:rollback --batch=2
-            php artisan migrate:refresh --step=3  # Refresh last 2 database
+            php artisan migrate:refresh # Refresh all database
             
             php artisan migrate --force  # Migrate the database
             php artisan db:seed
