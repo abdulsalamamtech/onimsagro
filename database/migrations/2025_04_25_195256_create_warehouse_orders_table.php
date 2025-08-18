@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('warehouse_orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('warehouse_id')->constrained('warehouses')->nullOnDelete();
+            $table->foreignId('warehouse_id')->nullable()->constrained('warehouses')->nullOnDelete();
             $table->string('full_name');
             $table->string('phone_number');
             $table->string('email')->nullable();
