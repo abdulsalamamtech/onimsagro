@@ -13,6 +13,7 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
+        // The password should be change immediately after deployment
         // Developer admin
         if (!User::where('email', 'abdulsalamamtech@gmail.com')->exists()) {
             $user = User::create([
@@ -22,7 +23,7 @@ class AdminSeeder extends Seeder
                 'email_verified_at' => now(),
             ]);
             $user->assignRole('super-admin');
-        }   
+        }
         // Application admin
         if (!User::where('email', 'contact@onimsagro.com')->exists()) {
             $user = User::create([
@@ -32,6 +33,6 @@ class AdminSeeder extends Seeder
                 'email_verified_at' => now(),
             ]);
             $user->assignRole('super-admin');
-        }   
+        }
     }
 }
