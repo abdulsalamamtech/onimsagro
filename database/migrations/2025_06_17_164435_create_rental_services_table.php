@@ -40,7 +40,8 @@ return new class extends Migration
             $table->string('address');
             $table->string('state');
             // renting_purpose
-            $table->text('renting_purpose')->default('');
+            // $table->text('renting_purpose')->default('');
+            $table->text('renting_purpose')->nullable();
             $table->string('duration');
             // duration unit enum of days, weeks, months, years
             $table->enum('duration_unit', ['days', 'weeks', 'months', 'years'])->default('days');
