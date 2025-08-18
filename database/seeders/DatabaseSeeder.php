@@ -24,11 +24,11 @@ class DatabaseSeeder extends Seeder
         // $this->call(UserRoleSeeder::class);
         // php artisan db:seed
 
-        if(!User::where('email', 'abdulsalamamtech@gmail.com')->exists()) {
+        if (!User::where('email', 'abdulsalamamtech@gmail.com')->exists()) {
             $user = User::create([
                 'name' => 'Admin User',
                 'email' => 'abdulsalamamtech@gmail.com',
-                'password' => bcrypt('password'), // Use bcrypt for password hashing
+                'password' => bcrypt('password'), // Use bcrypt for password hashing by default
                 'email_verified_at' => now(),
             ]);
             $user->assignRole('super-admin');
