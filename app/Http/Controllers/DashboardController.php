@@ -38,9 +38,9 @@ class DashboardController extends Controller
         $users = [
             'total' => User::count(),
             // 'admins' => User::where('role', 'admin')->count(),
-            'admins' => User::whereHasRole('admin')->count(),
-            'verified' => User::where('email_verified_at')->count(),
-            'pending' => User::whereNot('email_verified_at')->count(),
+            'admins' => User::whereHasRole('admin')?->count(),
+            'verified' => User::where('email_verified_at')?->count(),
+            'pending' => User::whereNot('email_verified_at')?->count(),
             // 'male' => User::where('gender', 'male')->count(),
             // 'female' => User::where('gender', 'female')->count(),
         ];
@@ -52,15 +52,15 @@ class DashboardController extends Controller
         // Logic to retrieve products
         $products = [
             'total' => Product::count(),
-            'active' => Product::where('status', 'active')->count(),
-            'inactive' => Product::where('status', 'inactive')->count(),
-            'trashed' => Product::onlyTrashed()->count(),
+            'active' => Product::where('status', 'active')?->count(),
+            'inactive' => Product::where('status', 'inactive')?->count(),
+            'trashed' => Product::onlyTrashed()?->count(),
             // out of stock
-            'out_of_stock' => Product::where('stock', 0)->count(),
+            'out_of_stock' => Product::where('stock', 0)?->count(),
             // low stock
-            'low_stock' => Product::where('stock', '<=', 5)->count(),
+            'low_stock' => Product::where('stock', '<=', 5)?->count(),
             // high stock
-            'high_stock' => Product::where('stock', '>', 5)->count(),
+            'high_stock' => Product::where('stock', '>', 5)?->count(),
             // product types
             'product_types' => Product::select('product_type_id')
                 ->distinct()
