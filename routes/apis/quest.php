@@ -130,3 +130,7 @@ Route::apiResource('rental-services', RentalServiceController::class)
 // Verify transaction
 Route::get('transactions/verify', [TransactionController::class, 'verifyTransaction'])
     ->name('transactions.verify');
+
+
+// Verify Order Routes
+Route::get('orders/{order}/verify', [OrderController::class, 'verifyOrder'])->name('orders.verify');
