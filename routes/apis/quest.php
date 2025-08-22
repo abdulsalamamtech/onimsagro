@@ -60,6 +60,8 @@ Route::apiResource('consultations', ConsultationController::class)
 // Product Routes
 Route::get('products', [ProductController::class, 'getProducts']);
 Route::get('products/{product}', [ProductController::class, 'show']);
+Route::get('search-products', [ProductController::class, 'searchProducts']);
+
 
 // Product Reviews
 Route::get('product-reviews', [ProductReviewController::class, 'getReviews']);
@@ -81,6 +83,8 @@ Route::apiResource('training-programs', TrainingProgramController::class)
 // Warehouse Routes
 Route::get('warehouses', [WarehouseController::class, 'getWarehouses']);
 Route::get('warehouses/{warehouse}', [WarehouseController::class, 'show']);
+Route::get('search-warehouses', [WarehouseController::class, 'searchWarehouse']);
+
 
 // Warehouse Reviews
 Route::get('product-reviews', [WarehouseReviewController::class, 'getReviews']);
