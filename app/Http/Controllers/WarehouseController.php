@@ -12,6 +12,7 @@ use App\Models\Activity;
 use App\Models\Asset;
 use App\Models\Warehouse;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -272,5 +273,41 @@ class WarehouseController extends Controller
         $warehouse->restore();
         // return response
         return ApiResponse::success($warehouse, "successfully restored trashed data", 200);
+    }    
+
+    /**
+     * [public] Search for Warehouse
+     */
+    public function searchWarehouse(Request $request)
+    {
+
+        // return "searching...";
+        if ($request->filled('query')) {
+            $search = $request->input('query');
+
+            $products = Warehouse::with(['banner', 'images.asset'])
+                ->where('status', 'active')
+                ->whereAny([
+                    'name',
+                    'description',
+                    'capacity',
+                    'sku',
+                    'price',
+                    'tag',
+                    'location',
+                ], 'LIKE', "%$search%")
+                ->latest()->paginate(10);
+
+            // check if data is empty
+            if ($products->isEmpty()) {
+                return ApiResponse::error([], "No warehouse found", 404);
+            }
+            // transform data
+            $response = WarehouseResource::collection($products);
+            // return response
+            return ApiResponse::success($response, 'successful', 200);
+        }
+
+        return ApiResponse::error([], "No warehouse found", 404);
     }    
 }

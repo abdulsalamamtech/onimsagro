@@ -27,7 +27,10 @@ class ProductController extends Controller
     public function index()
     {
         // get all data
-        $products = Product::with(['banner', 'productType', 'productCategory', 'images.asset'])->latest()->paginate(10);
+        $products = Product::with(['banner', 'productType', 'productCategory', 'images.asset'])
+            // ->where('status','active')
+            ->latest()
+            ->paginate(10);
         // check if data is empty
         if ($products->isEmpty()) {
             return ApiResponse::error([], "No products found", 404);
@@ -55,9 +58,9 @@ class ProductController extends Controller
         // if (count($request->file('images')) > 5) {
         //     return ApiResponse::error('You can only upload a maximum of 5 files', 422);
         // }
- 
+
         try {
-            
+
             // begin transaction
             DB::beginTransaction();
 
@@ -89,13 +92,13 @@ class ProductController extends Controller
                 // save product banner
                 $data['banner_id'] = $asset->id;
             }
-            
+
             // create product
             $product = Product::create($data);
 
             // Upload images
             if ($request->hasFile('images')) {
-                foreach($request->file('images') as $file){
+                foreach ($request->file('images') as $file) {
                     // upload file to cloudinary
                     $cloudinaryImage = Cloudinary::uploadApi()->upload($file->getRealPath());
                     // save image to assets
@@ -110,7 +113,7 @@ class ProductController extends Controller
                     info('product image', [$asset]);
                     // save images
                     $product->images()->create(['asset_id' => $asset->id]);
-                }    
+                }
             }
 
             // Load relationships
@@ -123,7 +126,7 @@ class ProductController extends Controller
             // log activity
             info('product created', [$product]);
             Activity::create([
-                'user_id' => ActorHelper::getUserId()?? null,
+                'user_id' => ActorHelper::getUserId() ?? null,
                 'description' => 'created product',
                 'logs' => $product
             ]);
@@ -131,8 +134,7 @@ class ProductController extends Controller
             DB::commit();
             // return response
             return ApiResponse::success($response, 'Product created successfully', 201, $response);
-           
-        }catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             //throw $th;
             // rollback transaction
             DB::rollBack();
@@ -142,7 +144,7 @@ class ProductController extends Controller
                 'trace' => $th->getTraceAsString(),
             ]);
             // return error response
-            return ApiResponse::error([], 'Failed to create product '. $th->getMessage(), 500);
+            return ApiResponse::error([], 'Failed to create product ' . $th->getMessage(), 500);
         }
     }
 
@@ -179,17 +181,16 @@ class ProductController extends Controller
             // log activity
             info('product updated', [$product]);
             Activity::create([
-                'user_id' => ActorHelper::getUserId()?? null,
+                'user_id' => ActorHelper::getUserId() ?? null,
                 'description' => 'updated product',
                 'logs' => $response
             ]);
-            
+
             // commit transaction
             DB::commit();
 
             // return response
             return ApiResponse::success($response, 'Product updated successfully', 200, $product);
-
         } catch (\Throwable $th) {
             //throw $th;
             // rollback transaction
@@ -222,6 +223,10 @@ class ProductController extends Controller
         $products = Product::where('status', 'active')
             ->with(['banner', 'productType', 'productCategory', 'images.asset'])
             ->latest()->paginate(10);
+        // check if data is empty
+        if ($products->isEmpty()) {
+            return ApiResponse::error([], "No products found", 404);
+        }
         // transform data
         $response = ProductResource::collection($products);
         // return response
@@ -229,10 +234,11 @@ class ProductController extends Controller
     }
 
 
-     /**
-      * Get trashed data
-      */
-      public function trashed(){
+    /**
+     * Get trashed data
+     */
+    public function trashed()
+    {
         // Get data
         $products = Product::onlyTrashed()->paginate();
         // check if data is empty
@@ -243,13 +249,14 @@ class ProductController extends Controller
         $response = ProductResource::collection($products);
         // return response
         return ApiResponse::success($response, "successfully load trashed data", 200);
-      }
+    }
 
 
     /**
      * Restore deleted data
      */
-    public function restore($id){
+    public function restore($id)
+    {
         // Get data
         $product = Product::onlyTrashed()->find($id);
         // check if data is empty
@@ -260,5 +267,57 @@ class ProductController extends Controller
         $product->restore();
         // return response
         return ApiResponse::success($product, "successfully restored trashed data", 200);
+    }
+
+    /**
+     * [public] Search for products
+     */
+    public function searchProducts(Request $request)
+    {
+
+        // return "searching...";
+        if ($request->filled('query')) {
+            $search = $request->input('query');
+
+            $products = Product::with(['banner', 'productType', 'productCategory', 'images.asset'])
+                ->where('status', 'active')
+                ->whereAny([
+                    'product_type_id',
+                    'product_category_id',
+                    'banner_id',
+                    'name',
+                    'description',
+                    'sku',
+                    'price',
+                    'stock',
+                    'tag',
+                    'location',
+                    'estimated_delivery',
+                    'moq',
+                    'specs',
+                ], 'LIKE', "%$search%")
+                ->orWhereHas('productCategory', function ($query) use ($search) {
+                    $query->whereAny([
+                        'name'
+                    ], 'LIKE', "%$search%");
+                })
+                ->orWhereHas('productType', function ($query) use ($search) {
+                    $query->whereAny([
+                        'name'
+                    ], 'LIKE', "%$search%");
+                })
+                ->latest()->paginate(10);
+
+            // check if data is empty
+            if ($products->isEmpty()) {
+                return ApiResponse::error([], "No products found", 404);
+            }
+            // transform data
+            $response = ProductResource::collection($products);
+            // return response
+            return ApiResponse::success($response, 'successful', 200);
+        }
+
+        return ApiResponse::error([], "No products found", 404);
     }
 }
