@@ -270,4 +270,23 @@ class OrderController extends Controller
         // return response
         return ApiResponse::success($response, 'successful', 200);
     }
+
+    /**
+     * Verify Order
+     */
+    public function verifyOrder(Order $order){
+        // load relationships
+        $order->load(['transactions']);
+        // verify if order has a successful transaction
+        if(!$order?->is_paid || $order?->transactions->isEmpty()){
+            return ApiResponse::error([], 'Error: Order has no successful transaction!', 400);
+        }
+        // update order status to completed
+        $order->status = ($order->status == 'pending') ? 'completed' : $order->status;
+        $order->save();
+        // transform data
+        $response = new OrderResource($order);
+        // return response
+        return ApiResponse::success($response, 'Order retrieved successfully', 200);
+    }
 }

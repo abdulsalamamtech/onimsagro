@@ -20,6 +20,7 @@ class Order extends Model
         'address',
         'total_price',
         'status',
+        'is_paid',
     ];
     /**
      * Get the user that owns the order.

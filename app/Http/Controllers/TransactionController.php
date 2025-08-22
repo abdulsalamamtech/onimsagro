@@ -108,8 +108,8 @@ class TransactionController extends Controller
     {
         // http://localhost:3000/?trxref=oo5ihug1qm&reference=oo5ihug1qm
         // http://127.0.0.1:8000/events/8?trxref=soq9s7fxmf&reference=soq9s7fxmf
-        
-        
+
+
         try {
             // Verify payment transaction
             $redirectUrl = config('app.frontend_url') . '/payment/error';
@@ -118,12 +118,19 @@ class TransactionController extends Controller
                 $PSP = Paystack::verify($reference);
                 $message = $PSP['message'];
                 info('verify payment message: ', [$message]);
+
                 if ($PSP['success']) {
                     $transaction = Transaction::where('reference', $reference)->first();
                     if ($transaction) {
                         $transaction->status = 'successful';
                         $transaction->save();
-    
+
+                        // make order paid and confirmed
+                        $order = Order::where('id', $transaction->order_id)->first();
+                        $order->is_paid = true;
+                        $order->status = ($order->status == 'pending') ? 'confirmed' : $order->status;
+                        $order->save();
+
                         // update order
                         // $order = Order::where('id', $transaction->order_id)->first();
                         // $order->paid = 'yes';
@@ -135,39 +142,36 @@ class TransactionController extends Controller
                         //     // info('PROCESSING: decrement available stock processing');
                         // }
                         // $order->save();
-    
+
                         // $redirectUrl = $transaction->data['redirect_url'] ?? url()->previous();
                         // redirect to success page
-                        $redirectUrl = config('app.frontend_url') . '/payment/success?trxref=' . $transaction->reference;
+                        $redirectUrl = config('app.frontend_url') . '/payment/' . $order->id . '?success=true&trxref=' . $transaction->reference;
                         // payment type
-                        if($transaction->payment_type == 'warehouse_order' && $transaction->warehouse_order_id) {
+                        if ($transaction->payment_type == 'warehouse_order' && $transaction->warehouse_order_id) {
                             // update warehouse order
                             $warehouseOrder = WarehouseOrder::where('id', $transaction->warehouse_order_id)->first();
                             $warehouseOrder->status = 'confirmed';
                             $warehouseOrder->save();
                         }
-                        if($transaction->payment_type == 'order' && $transaction->order_id) {
+                        if ($transaction->payment_type == 'order' && $transaction->order_id) {
                             // update service order
                             $order = Order::where('id', $transaction->order_id)->first();
                             $order->status = 'confirmed';
                             $order->save();
                         }
-    
+
                         return redirect($redirectUrl);
-    
                     }
-                }else{
+                } else {
                     // log error and return error response
                     info('Transaction verification failed: ', [$message]);
                     // Redirect to error page
-                    $redirectUrl = config('app.frontend_url') . '/payment/error?trxref=' . $reference;
+                    $redirectUrl = config('app.frontend_url') . '/payment/' . $reference . '?success=false&trxref=' . $reference;
                 }
-
             }
-            
+
             // return response
             return redirect($redirectUrl);
-            
         } catch (\Exception $e) {
             // log error and return error response
             // return response()->json(['message' => 'Transaction verification failed', 'error' => $e->getMessage()], 500);
