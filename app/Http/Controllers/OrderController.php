@@ -89,7 +89,7 @@ class OrderController extends Controller
                 'amount' => round($totalPayAmount, 2),
                 'payment_id' => $order->id,
                 // 'redirect_url' => URL('account/orders'),
-                // 'redirect_url' => config('app.frontend_url'),
+                // 'redirect_url' => config('app.frontend_url') . '/payment/success?order_id=' . $order->id,
                 'redirect_url' => route('transactions.verify'),
             ];
 
