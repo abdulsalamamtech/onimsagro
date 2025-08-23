@@ -29,7 +29,8 @@ jobs:
             # git clean -f # Clean the file system
             
             composer install  # Install dependencies
-            
+            php artisan vendor:publish --provider="Dedoc\Scramble\ScrambleServiceProvider"
+
             php artisan migrate --force  # Migrate the database
             php artisan db:seed
 
