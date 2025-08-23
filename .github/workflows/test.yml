@@ -26,7 +26,7 @@ jobs:
             git fetch origin # Fetch the latest version
             git reset --hard origin/main  # Reset to the latest commit on main branch
             git pull origin main  # Pull the latest changes from main branch
-            git clean -f # Clean the file system
+            # git clean -f # Clean the file system
             
             composer install  # Install dependencies
            
