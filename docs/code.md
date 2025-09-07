@@ -55,6 +55,7 @@ formulate the try and catch as a middleware
     Rule::unique('users')->withoutTrashed();
     ['unique:installation_types,name,' . $this->route('installation_type')->id,];
     ['unique:installation_types,name,' . $this->route('installation_type')->id . ',id'];
+    'email' => ['required', Rule::unique('farmers')->ignore($this->route('farmer'))]; // Perfect
 ```
 
 ## Terminal command
