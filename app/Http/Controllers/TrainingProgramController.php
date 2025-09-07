@@ -21,6 +21,10 @@ class TrainingProgramController extends Controller
     {
         // get all product reviews
         $trainingPrograms = TrainingProgram::with('created_by')->latest()->paginate();
+        // check if there are no farmers
+        if ($trainingPrograms->isEmpty()) {
+            return ApiResponse::error([], 'No training program found', 404);
+        }
         // transform data
         $response = TrainingProgramResource::collection($trainingPrograms);
         // return response

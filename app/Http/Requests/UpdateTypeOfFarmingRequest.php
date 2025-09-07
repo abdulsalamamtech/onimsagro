@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateTypeOfFarmingRequest extends FormRequest
 {
@@ -22,9 +23,10 @@ class UpdateTypeOfFarmingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:32', 'unique:type_of_farmings,name'],
+            // 'name' => ['required', 'string', 'max:32', 'unique:type_of_farmings,name,except,id'],
             // 'name' => ['required', 'string', 'max:32', 'unique:type_of_farmings,name,' . $this->route('typeOfFarming')],
             // 'name' => ['required', 'string', 'max:32', 'unique:type_of_farmings,name,' . $this->route('type_of_farming')->id],
+            'name' => ['required', Rule::unique('type_of_farmings')->ignore($this->route('type_of_farming'))]
         ];
     }
 }

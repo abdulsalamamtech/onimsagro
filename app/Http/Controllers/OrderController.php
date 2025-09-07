@@ -225,8 +225,9 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
 
+        return ApiResponse::error([], 'order can\'t be deleted');
         // delete order
-        $order->delete();
+        // $order->delete();
 
         // return response
         return ApiResponse::success([], 'Order deleted successfully', 200);
@@ -237,6 +238,10 @@ class OrderController extends Controller
      */
     public function confirmOrder(Order $order)
     {
+
+        // update order status to completed
+        $order->status = ($order->status == 'pending') ? 'confirmed' : $order->status;
+        $order->save();
         // load relationships
         $order->status = 'confirmed';
         $order->save();
@@ -251,6 +256,10 @@ class OrderController extends Controller
      */
     public function cancelOrder(Order $order)
     {
+        // if order is paid
+        if($order?->is_paid){
+            return ApiResponse::error([], "order has already been paid for!", 401);
+        }
         // load relationships
         $order->status = 'cancelled';
         $order->save();

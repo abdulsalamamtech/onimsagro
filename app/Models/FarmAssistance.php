@@ -18,7 +18,7 @@ class FarmAssistance extends Model
         'full_name',
         'phone_number',
         'email',
-        'assistance_types_id',
+        'assistance_type_id',
         'reason_for_request',
         'status',
         'created_by',
@@ -43,7 +43,7 @@ class FarmAssistance extends Model
 
     public function assistanceType()
     {
-        return $this->belongsTo(AssistanceType::class, 'assistance_types_id');
+        return $this->belongsTo(AssistanceType::class, 'assistance_type_id');
     }
 
     

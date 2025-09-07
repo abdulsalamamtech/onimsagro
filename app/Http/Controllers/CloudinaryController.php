@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AssetResource;
 use App\Models\Asset;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class CloudinaryController extends Controller
      */
     public function index()
     {
-        $assets = Asset::all();
+        $assets = Asset::latest()->paginate(50);
         // $data = $assets->map(function ($asset) {
         //     return [
         //         'id' => $asset->id,
@@ -28,8 +29,10 @@ class CloudinaryController extends Controller
         // });
         // return ApiResponse::success($data, 'All products retrieved successfully');
 
-        return ApiResponse::success($assets, 'All assets retrieved successfully');
-
+        // Transform data
+        $data = AssetResource::collection($assets);
+        // Return response
+        return ApiResponse::success($data, 'All assets retrieved successfully', 200, $assets);
     }
 
     /**
@@ -49,7 +52,7 @@ class CloudinaryController extends Controller
         //     'public_id' => 'assets/' . $request->file('image')->getClientOriginalName(),
         //     'overwrite' => true,
         // ]);
-        
+
         $cloudinaryImage = $request->file('image')->storeOnCloudinary('assets');
         $url = $cloudinaryImage->getSecurePath();
         $public_id = $cloudinaryImage->getPublicId();
@@ -79,9 +82,17 @@ class CloudinaryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Asset $asset)
+    public function show($cloudinary)
     {
-        return ApiResponse::success($asset, 'successful');
+        // return $cloudinary;
+        $asset = Asset::where('id', $cloudinary)->first();
+        if (!$asset) {
+            return ApiResponse::error([], 'asset not found', 404);
+        }
+
+        $data = new AssetResource($asset);
+
+        return ApiResponse::success($data, 'successful');
     }
 
     /**
@@ -89,29 +100,29 @@ class CloudinaryController extends Controller
      */
     public function update(Request $request, Asset $asset)
     {
+
+        // This is only allowed for testing purposes
         $validateRequest = $request->validate([
-            'image' => ['sometimes','required', 'image', 'max:2048']
+            'image' => ['sometimes', 'required', 'image', 'max:2048']
         ]);
 
-        if($request->hasFile('image')){
-            Cloudinary::destroy($asset->file_id);
-            $cloudinaryImage = $request->file('image')->storeOnCloudinary('assets');
-            $url = $cloudinaryImage->getSecurePath();
-            $public_id = $cloudinaryImage->getPublicId();
+        // if ($request->hasFile('image')) {
+        //     Cloudinary::destroy($asset->file_id);
+        //     $cloudinaryImage = $request->file('image')->storeOnCloudinary('assets');
+        //     $url = $cloudinaryImage->getSecurePath();
+        //     $public_id = $cloudinaryImage->getPublicId();
 
-            $asset->update([
-                'url' => $url,
-                'file_id' => $public_id,
-            ]);
-
-        }
+        //     $asset->update([
+        //         'url' => $url,
+        //         'file_id' => $public_id,
+        //     ]);
+        // }
 
         $asset->update([
             'description' => "updated cloudinary image",
         ]);
 
         ApiResponse::success([], "Asset successfully updated");
-
     }
 
     /**
@@ -119,10 +130,9 @@ class CloudinaryController extends Controller
      */
     public function destroy(Asset $asset)
     {
-        Cloudinary::destroy($asset->file_id);
-        $asset->delete();
+        // Cloudinary::destroy($asset->file_id);
+        // $asset->delete();
 
         ApiResponse::success([], "Asset successfully deleted");
     }
-
 }

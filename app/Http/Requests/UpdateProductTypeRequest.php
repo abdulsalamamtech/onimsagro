@@ -22,7 +22,7 @@ class UpdateProductTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:product_types,name,except,id',
             // 'created_by' => 'nullable|exists:users,id',
         ];
     }

@@ -67,7 +67,6 @@ class ProductTypeController extends Controller
 
             // return response
             return ApiResponse::success($response, 'successful', 201, $productType);
-
         } catch (\Throwable $th) {
             //throw $th;
             // rollback transaction
@@ -78,7 +77,7 @@ class ProductTypeController extends Controller
                 'trace' => $th->getTraceAsString(),
             ]);
             // return error response
-            return ApiResponse::error([], 'Failed to create product type '. $th->getMessage(), 500);
+            return ApiResponse::error([], 'Failed to create product type ' . $th->getMessage(), 500);
         }
     }
 
@@ -111,7 +110,7 @@ class ProductTypeController extends Controller
 
             // commit transaction and log activity 
             DB::commit();
-            info($this, [$productType]);
+            // info('Product type updated', [$productType]);
             Activity::create([
                 'user_id' => ActorHelper::getUserId() ?? null,
                 'description' => 'updated product type',
@@ -120,11 +119,16 @@ class ProductTypeController extends Controller
 
             return ApiResponse::success($response, 'successful', 200, $productType);
         } catch (\Throwable $th) {
-            //throw $th;
+            //throw $th;    
             // rollback transaction
             DB::rollBack();
-            Log::error($this, $th);
-            return ApiResponse::error('Failed to update product type', 500);
+            // log error
+            Log::error('Failed to update product type', [
+                'error' => $th->getMessage(),
+                'trace' => $th->getTraceAsString(),
+            ]);
+            // return error response
+            return ApiResponse::error([], 'Failed to update product type' . $th->getMessage(), 500);
         }
     }
 

@@ -44,6 +44,7 @@ class RoleController extends Controller
         );
 
 
+        // This can also be removed
         // Check if the userRoleEnum has role
         if (!in_array($data['name'], UserRoleEnum::getValues())) {
             return ApiResponse::error([], 'Invalid role', 400);
@@ -97,8 +98,12 @@ class RoleController extends Controller
      * Admin: Delete a role
      */
     public function destroy(Role $role){
+        // Check if the userRoleEnum has role
+        if (in_array($role->name, UserRoleEnum::getValues())) {
+            return ApiResponse::error([], 'You can\'t delete master role', 401);
+        }
         // Delete a role
-        Role::destroy($role);
+        // Role::destroy($role);
         // Return response
         return ApiResponse::success([], 'Role deleted successfully', 200);
     }

@@ -22,7 +22,7 @@ class UpdateAssistanceTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:assistance_types,name,' . $this->route('assistance_type'),
+            'name' => 'required|string|max:255|unique:assistance_types,name,' . $this->route('assistanceType'),
         ];
     }
 }

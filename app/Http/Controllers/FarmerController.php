@@ -19,7 +19,7 @@ class FarmerController extends Controller
      */
     public function index()
     {
-        $farmers = Farmer::paginate();
+        $farmers = Farmer::latest()->paginate();
 
         // check if there are no farmers
         if ($farmers->isEmpty()) {

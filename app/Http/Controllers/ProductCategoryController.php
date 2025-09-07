@@ -109,7 +109,7 @@ class ProductCategoryController extends Controller
             // commit transaction
             DB::commit();
             // log activity
-            info($this, [$productCategory]);
+            info('Product category updated', [$productCategory]);
             Activity::create([
                 'user_id' => ActorHelper::getUserId()?? null,
                 'description' => 'updated product category',

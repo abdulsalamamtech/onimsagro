@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Log;
 class FarmingInterestController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * [public] Display a listing of the resource.
      */
     public function index()
     {
@@ -65,7 +65,7 @@ class FarmingInterestController extends Controller
             DB::commit();
 
             // return response
-            return ApiResponse::success($response, 'farming interest created successfully', 201, $response);            
+            return ApiResponse::success($response, 'farming interest created successfully', 201, $response);
         } catch (\Throwable $th) {
             //throw $th;
             // rollback transaction
@@ -76,7 +76,7 @@ class FarmingInterestController extends Controller
                 'trace' => $th->getTraceAsString(),
             ]);
             // return error response
-            return ApiResponse::error([], 'failed to create farming interest '. $th->getMessage(), 500);            
+            return ApiResponse::error([], 'failed to create farming interest ' . $th->getMessage(), 500);
         }
     }
 
@@ -120,7 +120,7 @@ class FarmingInterestController extends Controller
             DB::commit();
 
             // return response
-            return ApiResponse::success($response, 'farming interest updated successfully', 201, $response);            
+            return ApiResponse::success($response, 'farming interest updated successfully', 201, $response);
         } catch (\Throwable $th) {
             //throw $th;
             // rollback transaction
@@ -131,7 +131,7 @@ class FarmingInterestController extends Controller
                 'trace' => $th->getTraceAsString(),
             ]);
             // return error response
-            return ApiResponse::error([], 'failed to update farming interest '. $th->getMessage(), 500);            
+            return ApiResponse::error([], 'failed to update farming interest ' . $th->getMessage(), 500);
         }
     }
 
@@ -144,6 +144,6 @@ class FarmingInterestController extends Controller
         $farmingInterest->delete();
 
         // return response
-        return ApiResponse::success([], 'farming interest deleted successfully', 204);
+        return ApiResponse::success([], 'farming interest deleted successfully', 200);
     }
 }

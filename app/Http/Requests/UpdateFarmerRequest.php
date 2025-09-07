@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateFarmerRequest extends FormRequest
 {
@@ -23,7 +24,7 @@ class UpdateFarmerRequest extends FormRequest
     {
         return [
             'full_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:farmers,email'],
+            'email' => ['required', Rule::unique('farmers')->ignore($this->route('farmer'))],
             'phone_number' => ['required', 'string', 'max:15'],
             'address' => ['nullable', 'string', 'max:255'],
             'state' => ['nullable', 'string', 'max:100'],

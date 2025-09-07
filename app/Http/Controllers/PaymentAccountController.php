@@ -47,7 +47,7 @@ class PaymentAccountController extends Controller
         // check if account already exists
         $existingAccount = PaymentAccount::where('account_number', $data['account_number'])
             ->where('bank_name', $data['bank_name'])
-            ->first()->exists();
+            ->first();
         if ($existingAccount) {
             return ApiResponse::error([], 'Payment account already exists', 409);
         }

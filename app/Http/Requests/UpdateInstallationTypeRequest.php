@@ -23,7 +23,7 @@ class UpdateInstallationTypeRequest extends FormRequest
     {
 
         return [
-            'name' => 'required|string|max:255|unique:installation_types,name,' . $this->route('installation_type')->id . ',id',
+            'name' => 'required|string|max:255|unique:installation_types,name,' . $this->route('installation_types') . ',id',
         ];
     }
 }
