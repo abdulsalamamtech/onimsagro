@@ -165,5 +165,6 @@ Route::prefix('admin')
 
 
 // Cloudinary
-Route::apiResource('cloudinary', CloudinaryController::class);
-// ->middlewareFor(['index'],['auth:sanctum']);
+Route::apiResource('cloudinary', CloudinaryController::class)
+    ->middlewareFor(['index', 'show'],['auth:sanctum'])
+    ->only(['index', 'show']);
