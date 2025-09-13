@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateFarmingInterestRequest extends FormRequest
 {
@@ -22,7 +23,8 @@ class UpdateFarmingInterestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:farming_interests,name',
+            // 'name' => 'required|string|max:255|unique:farming_interests,name',
+            'name' => ['required', Rule::unique('farming_interests')->ignore($this->route('farming_interest'))]
         ];
     }
 }
