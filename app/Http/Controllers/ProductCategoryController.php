@@ -21,7 +21,8 @@ class ProductCategoryController extends Controller
     public function index()
     {
         // get all product categories
-        $productCategories = ProductCategory::latest()->paginate(10);
+        $productCategories = ProductCategory::with(['createdBy'])
+        ->withCount('products')->latest()->paginate(10);
 
         // transform data
         $response = ProductCategoryResource::collection($productCategories);
