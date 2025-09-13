@@ -21,7 +21,7 @@ class ProductTypeController extends Controller
     public function index()
     {
         // get all product types
-        $productTypes = ProductType::latest()->paginate(10);
+        $productTypes = ProductType::withCount('products')->latest()->paginate(10);
 
         // if not exists
         if ($productTypes->isEmpty()) {
