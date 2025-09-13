@@ -15,7 +15,7 @@ class AssistanceTypeController extends Controller
      */
     public function index()
     {
-        $assistanceTypes = AssistanceType::latest()->paginate(20);
+        $assistanceTypes = AssistanceType::with(['createdBy'])->latest()->paginate(20);
 
         // check if there are no assistance types
         if ($assistanceTypes->isEmpty()) {
@@ -33,7 +33,11 @@ class AssistanceTypeController extends Controller
      */
     public function store(StoreAssistanceTypeRequest $request)
     {
-        $assistanceType = AssistanceType::create($request->validated());
+        $data = $request->validated();
+        // create data
+        // $data['created_by'] = auth()->id();
+        $data['created_by'] = $request?->user()?->id;
+        $assistanceType = AssistanceType::create($data);
 
         return ApiResponse::success(new AssistanceTypeResource($assistanceType), 'Assistance type created successfully', 201);
     }
@@ -43,6 +47,7 @@ class AssistanceTypeController extends Controller
      */
     public function show(AssistanceType $assistanceType)
     {
+        $assistanceType->load(['createdBy']);
         return ApiResponse::success(new AssistanceTypeResource($assistanceType), 'Assistance type retrieved successfully', 200);
     }
 

@@ -38,7 +38,6 @@ class ConsultationController extends Controller
         // validate data
         $data = $request->validated();
 
-
         try {
             // start transaction
             DB::beginTransaction();
