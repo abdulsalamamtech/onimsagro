@@ -65,3 +65,9 @@ formulate the try and catch as a middleware
     # php artisan migrate:fresh # First time installation
     # php artisan db:seed
 ```
+
+## Add column to migration table
+
+```sh
+    php artisan make:migration add_status_to_users_table --table=users
+```
