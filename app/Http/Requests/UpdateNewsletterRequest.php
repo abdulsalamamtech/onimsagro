@@ -23,8 +23,8 @@ class UpdateNewsletterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', Rule::unique('newsletters')->ignore($this->route('newsletter'))],
-            'is_subscriber' => ['nullable|boolean|in:true,false']
+            'email' => ['required', 'email', Rule::unique('newsletters')->ignore($this->route('newsletter'))],
+            'is_subscriber' => ['boolean']
         ];
     }
 }

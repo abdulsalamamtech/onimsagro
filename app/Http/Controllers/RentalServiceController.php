@@ -20,7 +20,7 @@ class RentalServiceController extends Controller
     public function index()
     {
         // get all rental services
-        $rentalServices = RentalService::latest()->paginate(10);
+        $rentalServices = RentalService::with(['equipmentType'])->latest()->paginate(10);
 
         // if not exists
         if ($rentalServices->isEmpty()) {
@@ -86,7 +86,7 @@ class RentalServiceController extends Controller
     public function show(RentalService $rentalService)
     {
         // load the createdBy relationship
-        $rentalService->load('createdBy');
+        $rentalService->load(['createdBy', 'updatedBy', 'equipmentType']);
         $response = new RentalServiceResource($rentalService);
 
         return ApiResponse::success($response, 'Rental service retrieved successfully', 200, $rentalService);        
