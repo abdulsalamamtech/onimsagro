@@ -28,6 +28,7 @@ class UpdateFarmAssistanceRequest extends FormRequest
             'assistance_type_id' => 'required|exists:assistance_types,id',
             'reason_for_request' => 'required|string|max:1000',
             'status' => 'required|in:pending,in_progress,completed,cancelled',
+            'farming_stage' => 'required|string|max:10000',
         ];
     }
 }

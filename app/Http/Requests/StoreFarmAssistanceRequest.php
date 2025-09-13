@@ -26,7 +26,8 @@ class StoreFarmAssistanceRequest extends FormRequest
             'phone_number' => 'required|string|max:15',
             'email' => 'required|email|max:255',
             'assistance_type_id' => 'required|exists:assistance_types,id',
-            'reason_for_request' => 'required|string|max:1000',
+            'reason_for_request' => 'required|string|max:10000',
+            'farming_stage'=> 'required|string|max:1000',
         ];
     }
 }

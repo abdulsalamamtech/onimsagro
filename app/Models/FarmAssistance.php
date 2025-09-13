@@ -22,6 +22,7 @@ class FarmAssistance extends Model
         'reason_for_request',
         'status',
         'created_by',
+        'farming_stage',
     ];
 
     protected $casts = [
