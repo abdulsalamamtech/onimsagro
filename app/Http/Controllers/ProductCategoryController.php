@@ -22,7 +22,7 @@ class ProductCategoryController extends Controller
     {
         // get all product categories
         $productCategories = ProductCategory::with(['createdBy'])
-        ->withCount('products')->latest()->paginate(10);
+            ->withCount('products')->latest()->paginate(10);
 
         // transform data
         $response = ProductCategoryResource::collection($productCategories);
