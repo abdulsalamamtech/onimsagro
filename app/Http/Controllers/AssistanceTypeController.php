@@ -15,7 +15,7 @@ class AssistanceTypeController extends Controller
      */
     public function index()
     {
-        $assistanceTypes = AssistanceType::get();
+        $assistanceTypes = AssistanceType::latest()->paginate(20);
 
         // check if there are no assistance types
         if ($assistanceTypes->isEmpty()) {
