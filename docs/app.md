@@ -257,7 +257,7 @@
 -   full_name
 -   phone_number
 -   email
--   assistance_types_id
+-   assistance_type_id
 -   reason_for_request
 
 ## [installation_types]
