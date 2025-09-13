@@ -309,14 +309,15 @@
 
 ---
 
+## newsletters
+
+-   email
+-   is_subscriber
+
 ## fags
 
 -   question
 -   answer
-
-## newsletters
-
--   email
 
 ## blogs
 

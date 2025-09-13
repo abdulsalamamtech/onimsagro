@@ -12,6 +12,7 @@ use App\Http\Controllers\FarmerController;
 use App\Http\Controllers\FarmingInterestController;
 use App\Http\Controllers\InstallationServiceController;
 use App\Http\Controllers\InstallationTypeController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentAccountController;
 use App\Http\Controllers\ProductCategoryController;
@@ -161,6 +162,8 @@ Route::prefix('admin')
         // Rental Service Routes
         Route::apiResource('rental-services', RentalServiceController::class)
             ->except(['destroy']);
+
+        Route::apiResource('newsletters', NewsletterController::class);            
     });
 
 
