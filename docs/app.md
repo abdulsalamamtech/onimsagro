@@ -259,6 +259,7 @@
 -   email
 -   assistance_type_id
 -   reason_for_request
+-   farming_stage
 
 ## [installation_types]
 
