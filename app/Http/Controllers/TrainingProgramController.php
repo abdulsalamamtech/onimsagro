@@ -20,7 +20,7 @@ class TrainingProgramController extends Controller
     public function index()
     {
         // get all product reviews
-        $trainingPrograms = TrainingProgram::with('created_by')->latest()->paginate();
+        $trainingPrograms = TrainingProgram::with('createdBy')->latest()->paginate();
         // check if there are no farmers
         if ($trainingPrograms->isEmpty()) {
             return ApiResponse::error([], 'No training program found', 404);
