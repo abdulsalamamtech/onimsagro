@@ -38,7 +38,7 @@ class ProductController extends Controller
         // transform data
         $response = ProductResource::collection($products);
         // return response
-        return ApiResponse::success($response, 'successful', 200);
+        return ApiResponse::success($response, 'successful', 200, $products);
     }
 
     /**
@@ -230,7 +230,7 @@ class ProductController extends Controller
         // transform data
         $response = ProductResource::collection($products);
         // return response
-        return ApiResponse::success($response, 200);
+        return ApiResponse::success($response, 'successful', 200, $products);
     }
 
 
@@ -315,7 +315,7 @@ class ProductController extends Controller
             // transform data
             $response = ProductResource::collection($products);
             // return response
-            return ApiResponse::success($response, 'successful', 200);
+            return ApiResponse::success($response, 'successful', 200, $products);
         }
 
         return ApiResponse::error([], "No products found", 404);
