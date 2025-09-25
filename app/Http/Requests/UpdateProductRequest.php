@@ -22,6 +22,8 @@ class UpdateProductRequest extends FormRequest
      */
     public function rules(): array
     {
+        // sometimes|required for fields that may not be present in the request
+
         return [
             'product_type_id' => 'nullable|exists:product_types,id',
             'product_category_id' => 'nullable|exists:product_categories,id',
@@ -29,9 +31,9 @@ class UpdateProductRequest extends FormRequest
             'name' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             // 'sku' => 'nullable|string|max:255|unique:products,sku,' . $this->route('products') . ',product',
-            'sku' => ['required', Rule::unique('products')->ignore($this->route('product'))], // Perfect
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
+            // 'sku' => ['required', Rule::unique('products')->ignore($this->route('product'))], // Perfect
+            'price' => 'sometimes|required|numeric|min:0',
+            // 'stock' => 'required|integer|min:0',
             'tag' => 'nullable|string|max:255',
             'location' => 'nullable|string|max:255',
             'moq' => 'nullable|string|max:5000',
