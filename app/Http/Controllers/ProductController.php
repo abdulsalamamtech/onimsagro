@@ -175,6 +175,9 @@ class ProductController extends Controller
             // update product
             $product->update($data);
 
+            // save and get latest data
+            // return $product->refresh();
+
             // transform data
             $response = new ProductResource($product);
 
