@@ -30,7 +30,7 @@ class ProductController extends Controller
         $products = Product::with(['banner', 'productType', 'productCategory', 'images.asset'])
             // ->where('status','active')
             ->latest()
-            ->paginate(10);
+            ->paginate(12);
         // check if data is empty
         if ($products->isEmpty()) {
             return ApiResponse::error([], "No products found", 404);
@@ -225,7 +225,7 @@ class ProductController extends Controller
         // get all products
         $products = Product::where('status', 'active')
             ->with(['banner', 'productType', 'productCategory', 'images.asset'])
-            ->latest()->paginate(10);
+            ->latest()->paginate(12);
         // check if data is empty
         if ($products->isEmpty()) {
             return ApiResponse::error([], "No products found", 404);
@@ -309,7 +309,7 @@ class ProductController extends Controller
                         'name'
                     ], 'LIKE', "%$search%");
                 })
-                ->latest()->paginate(10);
+                ->latest()->paginate(12);
 
             // check if data is empty
             if ($products->isEmpty()) {
