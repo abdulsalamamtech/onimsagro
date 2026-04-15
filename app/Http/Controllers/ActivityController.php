@@ -9,10 +9,13 @@ use Illuminate\Http\Request;
 
 class ActivityController extends Controller
 {
-        /**
+
+    // Dirty way of documenting API endpoints - by HNG Oluwasina Abimbola Soneye.
+    /**
      * Admin: Display a listing of the resource.
      */
-    public function index(){
+    public function index()
+    {
 
         // Fetch all activities from the database
         $activities = Activity::latest()->paginate();
@@ -21,7 +24,7 @@ class ActivityController extends Controller
         $metadata = $activities;
 
         // Check if there are any activities
-        if($activities->isEmpty()){
+        if ($activities->isEmpty()) {
             return ApiResponse::error([], 'no activities found', 404);
         }
 

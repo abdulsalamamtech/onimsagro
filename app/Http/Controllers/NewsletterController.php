@@ -21,7 +21,7 @@ class NewsletterController extends Controller
     {
         $newsletters = Newsletter::latest()->paginate();
 
-        // check if there are no farmers
+        // check if there are no data
         if ($newsletters->isEmpty()) {
             return ApiResponse::error([], 'No newsletter found', 404);
         }
@@ -31,7 +31,6 @@ class NewsletterController extends Controller
 
         // return response
         return ApiResponse::success($response, 'successful', 200, $newsletters);
-        
     }
 
     /**
@@ -46,7 +45,7 @@ class NewsletterController extends Controller
             DB::beginTransaction();
             // create newsletter
             $newsletter = newsletter::create($data);
-    
+
             // transform data
             $response = new NewsletterResource($newsletter);
 
@@ -56,13 +55,12 @@ class NewsletterController extends Controller
                 'user_id' => ActorHelper::getUserId(),
                 'description' => 'created newsletter',
                 'logs' => $newsletter
-            ]);            
-    
+            ]);
+
             // Commit 
             DB::commit();
             // return response
             return ApiResponse::success($response, 'newsletter created successfully', 201, $newsletter);
-
         } catch (\Throwable $th) {
             //throw $th;
             // rollback transaction
@@ -73,7 +71,7 @@ class NewsletterController extends Controller
                 'trace' => $th->getTraceAsString(),
             ]);
             // return error response
-            return ApiResponse::error([], 'failed to create newsletter '. $th->getMessage(), 500);             
+            return ApiResponse::error([], 'failed to create newsletter ' . $th->getMessage(), 500);
         }
     }
 
@@ -82,7 +80,7 @@ class NewsletterController extends Controller
      */
     public function show(Newsletter $newsletter)
     {
-        return ApiResponse::success($newsletter, 'newsletter retrieved successfully', 200);    
+        return ApiResponse::success($newsletter, 'newsletter retrieved successfully', 200);
     }
 
     /**
@@ -109,6 +107,6 @@ class NewsletterController extends Controller
     {
         $newsletter->delete();
 
-        return ApiResponse::success([], 'newsletter deleted successfully', 200);        
+        return ApiResponse::success([], 'newsletter deleted successfully', 200);
     }
 }
