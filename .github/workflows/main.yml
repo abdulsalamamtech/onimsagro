@@ -35,6 +35,10 @@ jobs:
             php artisan db:seed
 
             php artisan optimize:clear  # Clear the optimization
+            chmod -R 775 storage
+            chmod -R 775 bootstrap/cache
+            php artisan optimize:clear  # Clear the optimization
+
             php artisan cache:clear  # Clear the cache
             php artisan view:clear  # Clear the view cache
             php artisan route:clear  # Clear the route cache
