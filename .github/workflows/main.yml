@@ -37,6 +37,7 @@ jobs:
             php artisan optimize:clear  # Clear the optimization
             chmod -R 775 storage
             chmod -R 775 bootstrap/cache
+            php artisan scramble:export # Optional: Pre-generate API docs
             php artisan optimize:clear  # Clear the optimization
 
             php artisan cache:clear  # Clear the cache
