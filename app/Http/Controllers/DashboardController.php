@@ -106,7 +106,7 @@ class DashboardController extends Controller
             'inactive' => Warehouse::where('status', 'inactive')->count(),
             'trashed' => Warehouse::onlyTrashed()->count(),
             // warehouse reviews
-            'warehouse_reviews' => Warehouse::where('warehouseReviews')->count(),
+            'warehouse_reviews' => Warehouse::with('warehouseReviews')->count(),
             'ratings' => Warehouse::withCount('warehouseReviews')
                 ->get()
                 ->sum('rating'),
