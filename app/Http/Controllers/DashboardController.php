@@ -11,6 +11,10 @@ use App\Models\Warehouse;
 use App\Models\WarehouseOrder;
 use Illuminate\Http\Request;
 
+
+use Spatie\Permission\Models\Role;
+
+
 class DashboardController extends Controller
 {
     /**
@@ -34,15 +38,13 @@ class DashboardController extends Controller
 
     private function getUsers()
     {
+        $admin_count = User::role(['super-admin', 'admin'])->count();
         // Logic to retrieve users
         $users = [
             'total' => User::count(),
-            // 'admins' => User::where('role', 'admin')->count(),
-            'admins' => User::whereHasRole('admin')?->count(),
+            'admin' => $admin_count,
             'verified' => User::where('email_verified_at')?->count(),
             'pending' => User::whereNot('email_verified_at')?->count(),
-            // 'male' => User::where('gender', 'male')->count(),
-            // 'female' => User::where('gender', 'female')->count(),
         ];
         return $users;
     }
