@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         // From top to bottom
-        $this->call(UserRoleSeeder::class);
+        // $this->call(UserRoleSeeder::class); // Not available
         $this->call(AdminSeeder::class);
         // php artisan db:seed
 
