@@ -20,6 +20,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Default Admin Password
+    |--------------------------------------------------------------------------
+    |
+    | Used only by AdminSeeder when it creates an admin account that does not
+    | exist yet. If empty or weak, the seeder refuses to create the account.
+    | Existing admin passwords are never changed by the seeder.
+    |
+    */
+
+    'admin_default_password' => env('ADMIN_DEFAULT_PASSWORD'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Authentication Guards
     |--------------------------------------------------------------------------
     |
