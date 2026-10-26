@@ -38,4 +38,13 @@ class ProductCatalogueTest extends TestCase
     {
         $this->getJson('/api/products/999999')->assertNotFound();
     }
+
+    public function test_a_hidden_product_cannot_be_viewed_by_guests(): void
+    {
+        $this->knownIssue('Known issue #15 in CLAUDE.md', function () {
+            $hidden = Product::factory()->inactive()->create();
+
+            $this->getJson('/api/products/'.$hidden->id)->assertNotFound();
+        });
+    }
 }

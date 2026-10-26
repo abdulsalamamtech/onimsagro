@@ -6,15 +6,37 @@ use Closure;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\AssertionFailedError;
+use RuntimeException;
 
 abstract class TestCase extends BaseTestCase
 {
+    /**
+     * Refuse to run against anything but the in-memory SQLite database, so a
+     * test run (which wipes the database) can never touch a real one.
+     */
+    public function createApplication()
+    {
+        $app = parent::createApplication();
+
+        $connection = $app['config']->get('database.default');
+        $database = $app['config']->get("database.connections.{$connection}.database");
+        if ($connection !== 'sqlite' || $database !== ':memory:') {
+            throw new RuntimeException(
+                "Tests must use the in-memory SQLite database, not [{$connection}: {$database}]. Check phpunit.xml."
+            );
+        }
+
+        return $app;
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        // Tests must never reach a real external API (Paystack, Cloudinary, ...).
-        // Any HTTP call that a test has not faked with Http::fake() throws.
+        // Tests must never reach a real external API. Any call made through
+        // Laravel's Http client (Paystack) that a test has not faked throws.
+        // Cloudinary's SDK uses its own client, so phpunit.xml points it at a
+        // fake account instead.
         Http::preventStrayRequests();
     }
 
