@@ -14,6 +14,7 @@ use App\Http\Controllers\InstallationTypeController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentAccountController;
+use App\Http\Controllers\PaystackWebhookController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductReviewController;
 use App\Http\Controllers\RentalServiceController;
@@ -136,6 +137,10 @@ Route::apiResource('newsletters', NewsletterController::class)
 // Verify transaction
 Route::get('transactions/verify', [TransactionController::class, 'verifyTransaction'])
     ->name('transactions.verify');
+
+// Paystack webhook (signature-checked in the controller; excluded from CSRF in bootstrap/app.php)
+Route::post('paystack/webhook', PaystackWebhookController::class)
+    ->name('paystack.webhook');
 
 
 // Verify Order Routes
