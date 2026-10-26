@@ -151,23 +151,21 @@ class PaymentVerificationTest extends TestCase
 
     public function test_a_paid_order_reduces_stock_exactly_once_even_if_verified_twice(): void
     {
-        $this->knownIssue('Known issue #5 in CLAUDE.md', function () {
-            $product = Product::factory()->create(['price' => 2000, 'stock' => 10]);
-            $order = Order::factory()->create(['total_price' => 6000]);
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $product->id,
-                'quantity' => 3,
-                'unit_price' => 2000,
-                'total_price' => 6000,
-            ]);
-            Transaction::factory()->forOrder($order)->create(['reference' => 'ref_stock']);
-            $this->fakePaystackVerify('ref_stock', 6000);
+        $product = Product::factory()->create(['price' => 2000, 'stock' => 10]);
+        $order = Order::factory()->create(['total_price' => 6000]);
+        OrderItem::create([
+            'order_id' => $order->id,
+            'product_id' => $product->id,
+            'quantity' => 3,
+            'unit_price' => 2000,
+            'total_price' => 6000,
+        ]);
+        Transaction::factory()->forOrder($order)->create(['reference' => 'ref_stock']);
+        $this->fakePaystackVerify('ref_stock', 6000);
 
-            $this->verify('ref_stock')->assertRedirect();
-            $this->verify('ref_stock')->assertRedirect();
+        $this->verify('ref_stock')->assertRedirect();
+        $this->verify('ref_stock')->assertRedirect();
 
-            $this->assertSame(7, (int) $product->refresh()->stock);
-        });
+        $this->assertSame(7, (int) $product->refresh()->stock);
     }
 }
