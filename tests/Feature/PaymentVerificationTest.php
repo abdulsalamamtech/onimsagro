@@ -100,7 +100,7 @@ class PaymentVerificationTest extends TestCase
 
     public function test_verifying_the_same_reference_twice_changes_nothing_the_second_time(): void
     {
-        $this->knownIssue('New issue, not yet in the CLAUDE.md list (verification re-processes an already-successful payment)', function () {
+        $this->knownIssue('Known issue #12 in CLAUDE.md', function () {
             $order = Order::factory()->create(['total_price' => 8000]);
             $transaction = Transaction::factory()->forOrder($order)->create(['reference' => 'ref_twice']);
             $this->fakePaystackVerify('ref_twice', 8000);
@@ -119,7 +119,7 @@ class PaymentVerificationTest extends TestCase
 
     public function test_verifying_again_does_not_undo_progress_made_by_an_admin(): void
     {
-        $this->knownIssue('New issue, not yet in the CLAUDE.md list (verification re-processes an already-successful payment)', function () {
+        $this->knownIssue('Known issue #12 in CLAUDE.md', function () {
             $order = Order::factory()->create(['total_price' => 8000]);
             Transaction::factory()->forOrder($order)->create(['reference' => 'ref_shipped']);
             $this->fakePaystackVerify('ref_shipped', 8000);

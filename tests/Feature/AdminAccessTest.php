@@ -45,7 +45,7 @@ class AdminAccessTest extends TestCase
         $response->assertJsonMissingPath('data');
 
         // ...and should say "forbidden" (403) rather than look like a server crash.
-        $this->knownIssue('New issue, not yet in the CLAUDE.md list (missing role returns 500 instead of 403)', function () use ($response) {
+        $this->knownIssue('Known issue #13 in CLAUDE.md', function () use ($response) {
             $response->assertForbidden();
         });
     }
