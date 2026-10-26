@@ -27,6 +27,7 @@
         <env name="DB_URL" value=""/>
         <env name="PAYSTACK_SECRET_KEY" value="sk_test_fake_key_for_tests"/>
         <env name="PAYSTACK_PAYMENT_URL" value="https://api.paystack.co"/>
+        <env name="FRONTEND_URL" value="https://frontend.test"/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="PULSE_ENABLED" value="false"/>
         <env name="QUEUE_CONNECTION" value="sync"/>

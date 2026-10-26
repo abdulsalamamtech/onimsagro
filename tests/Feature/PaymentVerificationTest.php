@@ -18,14 +18,6 @@ class PaymentVerificationTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        // Set explicitly so these tests do not depend on known issue #11.
-        config(['app.frontend_url' => 'https://frontend.test']);
-    }
-
     private function verify(string $reference)
     {
         return $this->get('/api/transactions/verify?trxref='.$reference.'&reference='.$reference);
