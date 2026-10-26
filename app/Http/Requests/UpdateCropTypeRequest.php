@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCropTypeRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateCropTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,7 @@ class UpdateCropTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string','max:32', 'unique:crop_types,name,' . $this->route('cropType')],
+            'name' => ['required', 'string', 'max:32', Rule::unique('crop_types', 'name')->ignore($this->route('crop_type'))],
         ];
     }
 }
