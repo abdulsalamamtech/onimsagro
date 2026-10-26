@@ -65,73 +65,88 @@ class PaymentVerificationTest extends TestCase
 
     public function test_successful_payment_confirms_a_warehouse_booking(): void
     {
-        $this->knownIssue('Known issue #2 in CLAUDE.md', function () {
-            $booking = WarehouseOrder::factory()->create(['total_price' => 150000]);
-            $transaction = Transaction::factory()->forWarehouseOrder($booking)->create(['reference' => 'ref_wh_ok']);
-            $this->fakePaystackVerify('ref_wh_ok', 150000);
+        $booking = WarehouseOrder::factory()->create(['total_price' => 150000]);
+        $transaction = Transaction::factory()->forWarehouseOrder($booking)->create(['reference' => 'ref_wh_ok']);
+        $this->fakePaystackVerify('ref_wh_ok', 150000);
 
-            $response = $this->verify('ref_wh_ok');
+        $response = $this->verify('ref_wh_ok');
 
-            $response->assertRedirect();
-            $this->assertStringContainsString('success=true', $response->headers->get('Location'));
-            $this->assertSame('confirmed', $booking->refresh()->status);
-            $this->assertSame('successful', $transaction->refresh()->status);
-        });
+        $response->assertRedirect('https://frontend.test/payment/'.$booking->id.'?success=true&trxref=ref_wh_ok&type=warehouse_order');
+        $this->assertSame('confirmed', $booking->refresh()->status);
+        $this->assertSame('successful', $transaction->refresh()->status);
     }
 
     public function test_verification_rejects_a_payment_whose_amount_does_not_match_the_order(): void
     {
-        $this->knownIssue('Known issue #3 in CLAUDE.md', function () {
-            $order = Order::factory()->create(['total_price' => 8000]);
-            $transaction = Transaction::factory()->forOrder($order)->create(['reference' => 'ref_underpaid']);
-            // Paystack says "success", but the customer only paid ₦1.
-            $this->fakePaystackVerify('ref_underpaid', 1);
+        $order = Order::factory()->create(['total_price' => 8000]);
+        $transaction = Transaction::factory()->forOrder($order)->create(['reference' => 'ref_underpaid']);
+        // Paystack says "success", but the customer only paid ₦1.
+        $this->fakePaystackVerify('ref_underpaid', 1);
 
-            $response = $this->verify('ref_underpaid');
+        $response = $this->verify('ref_underpaid');
 
-            $response->assertRedirect();
-            $this->assertStringNotContainsString('success=true', $response->headers->get('Location'));
-            $order->refresh();
-            $this->assertFalse((bool) $order->is_paid, 'An underpaid order must not be marked paid.');
-            $this->assertSame('pending', $order->status);
-            $this->assertNotSame('successful', $transaction->refresh()->status);
-        });
+        $response->assertRedirect();
+        $this->assertStringNotContainsString('success=true', $response->headers->get('Location'));
+        $order->refresh();
+        $this->assertFalse((bool) $order->is_paid, 'An underpaid order must not be marked paid.');
+        $this->assertSame('pending', $order->status);
+        $this->assertSame('failed', $transaction->refresh()->status);
+    }
+
+    public function test_verification_rejects_a_payment_in_the_wrong_currency(): void
+    {
+        $order = Order::factory()->create(['total_price' => 8000]);
+        $transaction = Transaction::factory()->forOrder($order)->create(['reference' => 'ref_usd']);
+        $this->fakePaystackVerify('ref_usd', 8000, currency: 'USD');
+
+        $this->verify('ref_usd')->assertRedirect();
+
+        $this->assertFalse((bool) $order->refresh()->is_paid);
+        $this->assertSame('failed', $transaction->refresh()->status);
+    }
+
+    public function test_an_underpaid_warehouse_booking_is_not_confirmed(): void
+    {
+        $booking = WarehouseOrder::factory()->create(['total_price' => 150000]);
+        $transaction = Transaction::factory()->forWarehouseOrder($booking)->create(['reference' => 'ref_wh_underpaid']);
+        $this->fakePaystackVerify('ref_wh_underpaid', 1500);
+
+        $this->verify('ref_wh_underpaid')->assertRedirect();
+
+        $this->assertSame('pending', $booking->refresh()->status);
+        $this->assertSame('failed', $transaction->refresh()->status);
     }
 
     public function test_verifying_the_same_reference_twice_changes_nothing_the_second_time(): void
     {
-        $this->knownIssue('Known issue #12 in CLAUDE.md', function () {
-            $order = Order::factory()->create(['total_price' => 8000]);
-            $transaction = Transaction::factory()->forOrder($order)->create(['reference' => 'ref_twice']);
-            $this->fakePaystackVerify('ref_twice', 8000);
+        $order = Order::factory()->create(['total_price' => 8000]);
+        $transaction = Transaction::factory()->forOrder($order)->create(['reference' => 'ref_twice']);
+        $this->fakePaystackVerify('ref_twice', 8000);
 
-            $this->verify('ref_twice')->assertRedirect();
-            $orderAfterFirst = $order->refresh()->getAttributes();
-            $transactionAfterFirst = $transaction->refresh()->getAttributes();
+        $this->verify('ref_twice')->assertRedirect();
+        $orderAfterFirst = $order->refresh()->getAttributes();
+        $transactionAfterFirst = $transaction->refresh()->getAttributes();
 
-            $this->travel(5)->minutes();
-            $this->verify('ref_twice')->assertRedirect();
+        $this->travel(5)->minutes();
+        $this->verify('ref_twice')->assertRedirect();
 
-            $this->assertSame($orderAfterFirst, $order->refresh()->getAttributes());
-            $this->assertSame($transactionAfterFirst, $transaction->refresh()->getAttributes());
-        });
+        $this->assertSame($orderAfterFirst, $order->refresh()->getAttributes());
+        $this->assertSame($transactionAfterFirst, $transaction->refresh()->getAttributes());
     }
 
     public function test_verifying_again_does_not_undo_progress_made_by_an_admin(): void
     {
-        $this->knownIssue('Known issue #12 in CLAUDE.md', function () {
-            $order = Order::factory()->create(['total_price' => 8000]);
-            Transaction::factory()->forOrder($order)->create(['reference' => 'ref_shipped']);
-            $this->fakePaystackVerify('ref_shipped', 8000);
+        $order = Order::factory()->create(['total_price' => 8000]);
+        Transaction::factory()->forOrder($order)->create(['reference' => 'ref_shipped']);
+        $this->fakePaystackVerify('ref_shipped', 8000);
 
-            $this->verify('ref_shipped')->assertRedirect();
+        $this->verify('ref_shipped')->assertRedirect();
 
-            // An admin ships the order, then the customer reloads the payment return page.
-            $order->refresh()->update(['status' => 'shipped']);
-            $this->verify('ref_shipped')->assertRedirect();
+        // An admin ships the order, then the customer reloads the payment return page.
+        $order->refresh()->update(['status' => 'shipped']);
+        $this->verify('ref_shipped')->assertRedirect();
 
-            $this->assertSame('shipped', $order->refresh()->status);
-        });
+        $this->assertSame('shipped', $order->refresh()->status);
     }
 
     public function test_a_paid_order_reduces_stock_exactly_once_even_if_verified_twice(): void

@@ -61,8 +61,9 @@ abstract class TestCase extends BaseTestCase
      *
      * @param  float  $amountInNaira  what the customer actually paid (sent to us in kobo)
      * @param  string  $status  Paystack's payment status: success, failed, abandoned
+     * @param  string  $currency  currency Paystack reports for the payment
      */
-    protected function fakePaystackVerify(string $reference, float $amountInNaira, string $status = 'success'): void
+    protected function fakePaystackVerify(string $reference, float $amountInNaira, string $status = 'success', string $currency = 'NGN'): void
     {
         Http::fake([
             'api.paystack.co/transaction/verify/'.$reference => Http::response([
@@ -72,7 +73,7 @@ abstract class TestCase extends BaseTestCase
                     'status' => $status,
                     'reference' => $reference,
                     'amount' => (int) round($amountInNaira * 100),
-                    'currency' => 'NGN',
+                    'currency' => $currency,
                 ],
             ]),
         ]);
