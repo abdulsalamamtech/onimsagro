@@ -6,10 +6,12 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Models\WarehouseOrder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 /**
@@ -189,5 +191,27 @@ class StockControlTest extends TestCase
 
         $this->assertSame('confirmed', $booking->refresh()->status);
         $this->assertSame(10, (int) $product->refresh()->stock);
+    }
+
+    // --- Restocking ---------------------------------------------------------
+
+    public function test_an_admin_can_restock_a_product(): void
+    {
+        $product = Product::factory()->create(['stock' => 0]);
+        Sanctum::actingAs(User::factory()->superAdmin()->create());
+
+        $this->putJson('/api/admin/products/'.$product->id, ['stock' => 25])->assertOk();
+
+        $this->assertSame(25, (int) $product->refresh()->stock);
+    }
+
+    public function test_stock_cannot_be_set_below_zero(): void
+    {
+        $product = Product::factory()->create(['stock' => 5]);
+        Sanctum::actingAs(User::factory()->superAdmin()->create());
+
+        $this->putJson('/api/admin/products/'.$product->id, ['stock' => -1])->assertUnprocessable();
+
+        $this->assertSame(5, (int) $product->refresh()->stock);
     }
 }
