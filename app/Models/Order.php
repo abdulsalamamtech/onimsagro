@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
     use HasFactory, SoftDeletes;
-    
 
     protected $fillable = [
         'user_id',
@@ -21,7 +20,14 @@ class Order extends Model
         'total_price',
         'status',
         'is_paid',
+        'needs_attention',
+        'attention_note',
     ];
+
+    protected $casts = [
+        'needs_attention' => 'boolean',
+    ];
+
     /**
      * Get the user that owns the order.
      */
@@ -31,7 +37,7 @@ class Order extends Model
     }
     /**
      * Get the product that owns the order.
-     */ 
+     */
     // public function product()
     // {
     //     return $this->belongsTo(Product::class);
@@ -53,7 +59,6 @@ class Order extends Model
         return $this->hasMany(Transaction::class);
     }
 
-    
     /**
      * Get the activity logs for the order.
      */

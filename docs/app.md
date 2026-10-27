@@ -151,6 +151,9 @@
 -   status [pending, confirmed, processing, shipped, delivered, cancelled]
 -   updated_by
 -   user_id (if buyer can have account)
+-   is_paid
+-   needs_attention (set when a paid order could not be fully covered by stock)
+-   attention_note
 
 ## order_items
 

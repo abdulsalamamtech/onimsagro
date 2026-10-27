@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\WarehouseOrder;
 use Illuminate\Support\Facades\DB;
@@ -101,12 +102,64 @@ class PaymentConfirmationService
     private function confirmOrder(int $orderId): void
     {
         $order = Order::lockForUpdate()->findOrFail($orderId);
+
+        // Reduce stock only the first time this order becomes paid, even if it
+        // has more than one successful transaction.
+        if (! $order->is_paid) {
+            $this->takeStockFor($order);
+        }
+
         $order->is_paid = true;
         // Only move a fresh order forward; never undo progress made by an admin.
         if ($order->status === 'pending') {
             $order->status = 'confirmed';
         }
         $order->save();
+    }
+
+    /**
+     * Reduce each product's stock by the quantity ordered, never below zero.
+     * If there is not enough stock the payment still stands, but the order is
+     * flagged for an admin to resolve (refund, restock or partial delivery).
+     */
+    private function takeStockFor(Order $order): void
+    {
+        $quantities = $order->orderItems()
+            ->selectRaw('product_id, SUM(quantity) as quantity')
+            ->groupBy('product_id')
+            ->pluck('quantity', 'product_id');
+
+        // Lock products in id order so simultaneous payments cannot deadlock.
+        $products = Product::withTrashed()
+            ->whereIn('id', $quantities->keys())
+            ->orderBy('id')
+            ->lockForUpdate()
+            ->get();
+
+        $shortages = [];
+        foreach ($products as $product) {
+            $wanted = (int) $quantities[$product->id];
+            $available = max(0, (int) $product->stock);
+            $taken = min($wanted, $available);
+
+            if ($taken < $wanted) {
+                $shortages[] = "{$product->name} (product #{$product->id}): ordered {$wanted}, "
+                    ."only {$available} in stock, short by ".($wanted - $taken);
+            }
+
+            $product->stock = $available - $taken;
+            $product->save();
+        }
+
+        if ($shortages) {
+            $order->needs_attention = true;
+            $order->attention_note = 'Paid but not enough stock: '.implode('; ', $shortages).'.';
+
+            Log::warning('Paid order exceeds available stock; flagged for admin', [
+                'order_id' => $order->id,
+                'shortages' => $shortages,
+            ]);
+        }
     }
 
     private function confirmWarehouseOrder(int $warehouseOrderId): void
