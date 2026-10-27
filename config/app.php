@@ -56,6 +56,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Frontend URL
+    |--------------------------------------------------------------------------
+    |
+    | The public React website. Customers are redirected here after a Paystack
+    | payment (TransactionController@verifyTransaction). Without this entry
+    | Laravel's built-in default of http://localhost:3000 would be used.
+    |
+    */
+
+    'frontend_url' => env('FRONTEND_URL', 'https://onimsagro.com'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |
