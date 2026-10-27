@@ -43,6 +43,10 @@ return Application::configure(basePath: dirname(__DIR__))
 
         //Incoming requests from your SPA can authenticate using Laravel's session cookies
         $middleware->statefulApi();
+        // Paystack's server cannot send a CSRF token; the webhook is verified by its signature instead
+        $middleware->validateCsrfTokens(except: [
+            'api/paystack/webhook',
+        ]);
         // End of customized middleware
 
 
