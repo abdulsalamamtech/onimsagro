@@ -5,6 +5,7 @@ use App\Http\Controllers\AssetController;
 use App\Http\Controllers\AssistanceTypeController;
 use App\Http\Controllers\CloudinaryController;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\CropTypeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EquipmentTypeController;
 use App\Http\Controllers\FarmAssistanceController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\ProductReviewController;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\RentalServiceController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TechnicalSupportController;
 use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\TypeOfFarmingController;
 use App\Http\Controllers\UserProfileController;
@@ -77,6 +79,10 @@ Route::prefix('admin')
 
         // Consultation Routes
         Route::apiResource('consultations', ConsultationController::class);
+        // Technical Support Routes
+        Route::apiResource('technical-supports', TechnicalSupportController::class);
+        // Crop Types Routes
+        Route::apiResource('crop-types', CropTypeController::class);
 
         // Product categories Routes
         Route::apiResource('product-categories', ProductCategoryController::class);

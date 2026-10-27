@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TechnicalSupport extends Model
 {
     use HasFactory, SoftDeletes;
-    
+
     protected $fillable = [
         'full_name',
         'phone_number',
@@ -17,13 +17,11 @@ class TechnicalSupport extends Model
         'crop_type_id',
         'stage_of_plant',
         'problem_with_crop',
+        'status',
     ];
 
     public function cropType()
     {
         return $this->belongsTo(CropType::class);
-    } 
-
-    
-
+    }
 }

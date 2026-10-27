@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\AssistanceTypeController;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\CropTypeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EquipmentTypeController;
 use App\Http\Controllers\FarmAssistanceController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductReviewController;
 use App\Http\Controllers\RentalServiceController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TechnicalSupportController;
 use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TypeOfFarmingController;
@@ -58,6 +60,14 @@ Route::apiResource('payment-accounts', PaymentAccountController::class)
 Route::apiResource('consultations', ConsultationController::class)
     ->only(['store']);
 
+// Technical Support Routes
+Route::apiResource('technical-supports', TechnicalSupportController::class)
+    ->only(['store']);
+
+// Crop Types Routes (for the technical-support form)
+Route::apiResource('crop-types', CropTypeController::class)
+    ->only(['index']);
+
 
 // Product Routes
 Route::get('products', [ProductController::class, 'getProducts']);
@@ -89,7 +99,7 @@ Route::get('search-warehouses', [WarehouseController::class, 'searchWarehouse'])
 
 
 // Warehouse Reviews
-Route::get('product-reviews', [WarehouseReviewController::class, 'getReviews']);
+Route::get('warehouse-reviews', [WarehouseReviewController::class, 'getReviews']);
 
 // Warehouse Order Routes
 Route::apiResource('warehouse-orders', WarehouseOrderController::class)

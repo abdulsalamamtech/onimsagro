@@ -23,8 +23,8 @@ class StoreTechnicalSupportRequest extends FormRequest
     {
         return [
             'full_name' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
+            'phone_number' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
             'crop_type_id' => 'nullable|integer|exists:crop_types,id',
             'stage_of_plant' => 'required|string|max:255',
             'problem_with_crop' => 'required|string|max:255',
